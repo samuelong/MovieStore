@@ -8,6 +8,6 @@ namespace MovieStore.Models
     public class Customer
     {
         public string MemberID { get; set; }
-        public string 
+        public string Name { get; set; }
     }
 }
