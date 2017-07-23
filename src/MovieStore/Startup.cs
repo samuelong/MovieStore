@@ -24,12 +24,26 @@ namespace MovieStore
         {
             app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
-            app.UseMvc(routes => 
-            routes.MapRoute(
-                name : "default",
-                template : "{controller}/{action}/{id?}",
-                defaults : new { controller = "Home", action = "HomePage" }
-                )
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "Empty",
+                    template: "",
+                    defaults: new { controller = "Home", action = "GoToHomePage" }
+                    );
+
+                routes.MapRoute(
+                    name: "test1",
+                    template: "{controller}",
+                    defaults: new { controller = "Home", action = "GoToHomePage" }
+                    );
+
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller}/{action}/{id?}",
+                    defaults: new { controller = "Home", action = "GoToHomePage" }
+                    );
+            }
             );
         }
     }

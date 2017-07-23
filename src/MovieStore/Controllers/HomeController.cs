@@ -11,10 +11,30 @@ namespace MovieStore.Controllers
     public class HomeController : Controller
     {
         // GET: /<controller>/
-        public IActionResult HomePage()
+        public IActionResult GoToHomePage()
         {
-            return View();
+            return View("HomePage");
         }
 
+        public IActionResult ViewCart()
+        {
+            return View("Cart");
+        }
+
+        public IActionResult ViewProfile()
+        {
+            return View("Profile");
+        }
+
+        public IActionResult ViewMovies()
+        {
+            return View("Movie");
+        }
+
+        [HttpPost]
+        public ActionResult GoToPurchase()
+        {
+            return View("Purchase");
+        }
     }
 }

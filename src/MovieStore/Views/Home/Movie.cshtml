@@ -1,0 +1,26 @@
+﻿@{ Layout = "_Layout";}
+
+<div class="container" style="background-color:lightgrey">
+    <form action="" method="">
+        <div class="row">
+            <div class="col-xs-6">
+                <label style="font-size:x-large">-Search for your movies-</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                @Html.TextBox("txtSearch")
+                @Html.DropDownList("ddlFilter", new SelectListItem[]{
+               new SelectListItem() { Text = "Name", Value = "Name" },
+               new SelectListItem() { Text = "Genre", Value = "Genre" }
+                })
+                <button class="btn btn-success" type="button">Search</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- Movie area. Your code here.-->
+            </div>
+        </div>
+    </form>
+</div>
