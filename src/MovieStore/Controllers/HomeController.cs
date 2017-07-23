@@ -32,9 +32,9 @@ namespace MovieStore.Controllers
         }
 
         [HttpPost]
-        public ActionResult GoToPurchase()
+        public ActionResult GoToPayment()
         {
-            return View("Purchase");
+            return View("Payment");
         }
     }
 }
