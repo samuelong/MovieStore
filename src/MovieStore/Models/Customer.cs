@@ -7,5 +7,7 @@ namespace MovieStore.Models
 {
     public class Customer
     {
+        public string MemberID { get; set; }
+        public string 
     }
 }
