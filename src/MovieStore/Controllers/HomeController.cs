@@ -11,9 +11,8 @@ namespace MovieStore.Controllers
     public class HomeController : Controller
     {
         // GET: /<controller>/
-        public IActionResult Index()
+        public IActionResult HomePage()
         {
-            ViewBag.Message = "lol";
             return View();
         }
 

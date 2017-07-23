@@ -23,7 +23,14 @@ namespace MovieStore
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             app.UseDeveloperExceptionPage();
-            app.UseMvcWithDefaultRoute();
+            app.UseStaticFiles();
+            app.UseMvc(routes => 
+            routes.MapRoute(
+                name : "default",
+                template : "{controller}/{action}/{id?}",
+                defaults : new { controller = "Home", action = "HomePage" }
+                )
+            );
         }
     }
 }
