@@ -24,7 +24,6 @@ namespace MovieStore
         {
             app.UseStatusCodePages();
             app.UseDeveloperExceptionPage();
-            app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseMvc(routes =>
             {
