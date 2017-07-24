@@ -22,8 +22,10 @@ namespace MovieStore
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            app.UseStatusCodePages();
             app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
+            app.UseMvcWithDefaultRoute();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

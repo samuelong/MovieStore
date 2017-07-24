@@ -36,5 +36,7 @@ namespace MovieStore.Controllers
         {
             return View("Purchase");
         }
+
+        public ViewResult Index() => View(new Dictionary<string, object> { ["Placeholder"] = "Placeholder" });
     }
 }
