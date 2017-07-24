@@ -1,11 +1,12 @@
 ﻿@{ Layout = "_Layout";}
-@model MovieStore.Models.Movie
+@model MovieStore.Models.Cart
+@using System.Globalization;
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-12">
             <table class="table table-bordered table-condensed table-hover table-responsive">
-                @foreach (var m in Model.Movies())
+                @foreach (var m in Model.GetCart())
                 {
                     <tr>
                         <th class="col-xs-6">Movie Name</th>
@@ -13,9 +14,9 @@
                         <th class="col-xs-4">Duration of Rental</th>
                     </tr>
                     <tr>
-                        <td>@m</td>
-                        <td>Movie Price Here</td>
-                        <td>Duration of Rental here</td>
+                        <td>@m.Movie.Title</td>
+                        <td>@m.Movie.Price.ToString("C2", CultureInfo.CurrentCulture)</td>
+                        <td>@m.StartRentalDate-@m.EndRentalDate</td>
                     </tr>
                 }
             </table>

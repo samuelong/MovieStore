@@ -15,26 +15,41 @@ namespace MovieStore.Controllers
 
         public IActionResult ViewCart()
         {
-            return View("Cart", new List<Movie>()
-            {
-                new Movie("test1", Convert.ToDateTime("2017-07-24"), 140, "Test1Director",
-                new List<string>()
-                {
-                    "Actor1",
-                    "Actor2"
-                },
-                "A test show"
-                ),
-                new Movie("test2", Convert.ToDateTime("2016-07-24"), 140, "Test2Director",
-                new List<string>()
-                {
-                    "Actor1",
-                    "Actor2"
-                },
-                "A test2 show"
+            // Returning View with Cart
+            return View
+            ("Cart", 
+                new Cart
+                (
+                    new RentalInfo
+                    (
+                        new Movie("test1", Convert.ToDateTime("2017-07-24"), 140, "Test1Director",
+                        new List<string>()
+                        {
+                            "Actor1",
+                            "Actor2"
+                        },
+                        "A test show",
+                        20.5m
+                        ),
+                        Convert.ToDateTime("2017-08-29"),
+                        Convert.ToDateTime("2017-09-20")
+                    ),
+                    new RentalInfo
+                    (
+                        new Movie("test2", Convert.ToDateTime("2016-07-24"), 140, "Test2Director",
+                        new List<string>()
+                        {
+                            "Actor1",
+                            "Actor2"
+                        },
+                        "A test2 show",
+                        32.4m
+                        ),
+                        Convert.ToDateTime("2017-08-29"),
+                        Convert.ToDateTime("2017-09-20")
+                    )
                 )
-            }
-                );
+            );
         }
     }
 }
