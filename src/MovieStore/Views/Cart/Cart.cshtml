@@ -1,0 +1,31 @@
+﻿@{ Layout = "_Layout";}
+@model MovieStore.Models.Movie
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-bordered table-condensed table-hover table-responsive">
+                @foreach (var m in Model.Movies())
+                {
+                    <tr>
+                        <th class="col-xs-6">Movie Name</th>
+                        <th class="col-xs-2">Movie Price</th>
+                        <th class="col-xs-4">Duration of Rental</th>
+                    </tr>
+                    <tr>
+                        <td>@m</td>
+                        <td>Movie Price Here</td>
+                        <td>Duration of Rental here</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <form enctype="application/x-www-form-urlencoded" action="/Home/GoToPayment" method="post">
+                <input type="submit" />
+            </form>
+        </div>
+    </div>
+</div>

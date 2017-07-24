@@ -3,28 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MovieStore.Models;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MovieStore.Controllers
 {
-    public class HomeController : Controller
+    public class ProfileController : Controller
     {
         // GET: /<controller>/
-        public IActionResult GoToHomePage()
+        public IActionResult Profile()
         {
-            return View("HomePage");
-        }
-
-        public IActionResult ViewMovies()
-        {
-            return View("Movie");
-        }
-
-        [HttpPost]
-        public ActionResult GoToPayment()
-        {
-            return View("Payment");
+            return View(new Customer()
+            {
+                MemberID = "MyMemberID",
+                Name = "LOL"
+            }
+                );
         }
     }
 }
