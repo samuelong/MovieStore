@@ -20,12 +20,19 @@
                     <td class="col-xs-8">@Model.Name</td>
                 </tr>
                 <tr>
-                    <td class="col-xs-4"></td>
-                    <td class="col-xs-8"></td>
+                    <td class="col-xs-4">Email Address</td>
+                    <td class="col-xs-8">@Model.Email</td>
                 </tr>
                 <tr>
-                    <td class="col-xs-4"></td>
-                    <td class="col-xs-8"></td>
+                    <td class="col-xs-4">Phone Number</td>
+                    <td class="col-xs-8">@Model.PhoneNo</td>
+                </tr>
+            </table>
+            <table class="table table-bordered table-responsive table-hover">
+                <tr>
+                    <th>Movie Name</th>
+                    <th>Movie Duration</th>
+                    <th><span id="slider" onload="createSlider();"></span></th>
                 </tr>
             </table>
         </div>

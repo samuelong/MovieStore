@@ -14,11 +14,9 @@ namespace MovieStore.Controllers
         // GET: /<controller>/
         public IActionResult Profile()
         {
-            return View(new Customer()
-            {
-                MemberID = "MyMemberID",
-                Name = "LOL"
-            }
+            return View
+                (
+                new Customer("Test1", "IName", "MyEmail@Email.com", 999)
                 );
         }
     }
