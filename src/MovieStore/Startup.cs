@@ -57,6 +57,11 @@ namespace MovieStore
                     defaults: new { controller = "Profile", action = "Profile" });
 
                 routes.MapRoute(
+                    name: "Cart",
+                    template: "Cart",
+                    defaults: new { controller = "Cart", action = "ViewCart" });
+
+                routes.MapRoute(
                     name: "test1",
                     template: "{controller}",
                     defaults: new { controller = "Home", action = "GoToHomePage" }
