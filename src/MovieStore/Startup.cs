@@ -7,6 +7,8 @@ using MovieStore.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MovieStore.Infrastructure;
+using Microsoft.AspNetCore.Identity;
 
 namespace MovieStore
 {
@@ -21,11 +23,18 @@ namespace MovieStore
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
-        { 
+        {
+            services.AddTransient<IPasswordValidator<AppUser>, CustomPasswordValidator>();
+            services.AddTransient<IUserValidator<AppUser>, CustomUserValidator>();
+
             services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration["Data:MovieStoreIdentity:ConnectionString"]));
             services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<AppIdentityDbContext>();
 
             services.AddIdentity<AppUser, IdentityRole>(opts => {
+
+                opts.User.RequireUniqueEmail = true;
+                //opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz";
+
                 opts.Password.RequiredLength = 6;
                 opts.Password.RequireNonAlphanumeric = false;
                 opts.Password.RequireLowercase = false;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,16 +12,19 @@ namespace MovieStore.Controllers
     public class HomeController : Controller
     {
         // GET: /<controller>/
+        //[Authorize]
         public IActionResult GoToHomePage()
         {
             return View("HomePage");
         }
 
+        //[Authorize]
         public IActionResult ViewMovies()
         {
             return View("Movie");
         }
 
+        //[Authorize]
         [HttpPost]
         public ActionResult GoToPayment()
         {
