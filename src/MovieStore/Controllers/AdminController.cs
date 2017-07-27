@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using MovieStore.Models;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MovieStore.Controllers
 {
+    [Authorize(Roles = "Admins")]
     public class AdminController : Controller
     {
         private UserManager<AppUser> userManager;
@@ -135,7 +137,7 @@ namespace MovieStore.Controllers
                     ModelState.AddModelError("", "User Not Found");
                 }
             }
-            return View(user);
+            return RedirectToAction("Edit", user);
         }
         private void AddErrorsFromResult(IdentityResult result)
         {

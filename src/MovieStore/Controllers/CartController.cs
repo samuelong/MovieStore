@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MovieStore.Models;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,6 +12,8 @@ namespace MovieStore.Controllers
 {
     public class CartController : Controller
     {
+        [Authorize(Roles = "Users")]
+        [Authorize(Roles = "Admins")]
         // GET: /<controller>/
 
         public IActionResult ViewCart()
