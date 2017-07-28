@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Movie>
+
+@foreach (var p in Model)
+{
+    <div>
+        <h3>@p.Title</h3>
+        @p.Desc
+        <h4>@p.Price.ToString("c")</h4>
+    </div>
+}
