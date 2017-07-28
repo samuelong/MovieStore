@@ -42,7 +42,7 @@ namespace MovieStore
                 opts.Password.RequireDigit = false;
             }).AddEntityFrameworkStores<AppIdentityDbContext>();
 
-            services.AddTransient<IMovieRepository, FakeMovieRepository>();
+            services.AddTransient<IMovieRepository, EFMovieRepository>();
 
             services.AddMvc();
         }
@@ -79,6 +79,7 @@ namespace MovieStore
                     defaults: new { controller = "Home", action = "GoToHomePage" }
                     );
 
+                //SeedData.EnsurePopulated(app);
                 AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
             }
             );
