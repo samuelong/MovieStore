@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System;
 
 namespace MovieStore.Models
 {
@@ -39,5 +40,17 @@ namespace MovieStore.Models
         public string RoleId { get; set; }
         public string[] IdsToAdd { get; set; }
         public string[] IdsToDelete { get; set; }
+    }
+
+    public class MovieModel
+    {
+        [Required]
+        public string Name { get; set; }
+        [Required]
+        public double Price { get; set; }
+        [Required]
+        public DateTime StartingDate { get; set; }
+        [Required]
+        public DateTime EndingDate { get; set; }
     }
 }

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace MovieStore.Controllers
 {
-    [Authorize(Roles = "Admins"]
+    [Authorize(Roles = "Admins")]
     public class AccountController : Controller
     {
         private UserManager<AppUser> userManager;
