@@ -10,10 +10,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MovieStore.Controllers
 {
+    [Authorize(Roles = "Users")]
     public class CartController : Controller
     {
-        [Authorize(Roles = "Users")]
-        [Authorize(Roles = "Admins")]
         // GET: /<controller>/
 
         public IActionResult ViewCart()

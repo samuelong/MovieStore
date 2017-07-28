@@ -9,29 +9,28 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MovieStore.Controllers
 {
+    // HOMEPAGE FOR USERS
+    [Authorize(Roles = "Users")]
     public class HomeController : Controller
     {
         // GET: /<controller>/
-        [Authorize]
         public IActionResult GoToHomePage()
         {
             return View("HomePage");
         }
 
-        [Authorize]
         public IActionResult ViewMovies()
         {
             return View("Movie");
         }
 
-        [Authorize]
-        [HttpPost]
         public ActionResult GoToPayment()
         {
             return View("Payment");
         }
 
-        [Authorize]
+
+        // THESE ARE ADMIN HOMEPAGE STUFF. PUT IN YOUR OWN HOMEPAGE.
         public IActionResult Index() => View(GetData(nameof(Index)));
         [Authorize(Roles = "Users")]
         public IActionResult OtherAction() => View("Index", GetData(nameof(OtherAction)));

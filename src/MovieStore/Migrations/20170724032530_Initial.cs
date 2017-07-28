@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace MovieStore.Migrations
 {
+    /* Add your DATABASE TABLES HERE!*/
+
     public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
