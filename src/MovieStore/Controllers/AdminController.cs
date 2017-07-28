@@ -139,18 +139,23 @@ namespace MovieStore.Controllers
             }
             return RedirectToAction("Edit", user);
         }
-        [HttpPost]
-        public async Task<IActionResult> AddMovie(CreateModel model)
+        /*[HttpPost]
+        public async Task<IActionResult> AddMovie(MovieModel model)
         {
             if (ModelState.IsValid)
             {
-                AppUser user = new AppUser
+                Movie movie = new Movie
                 {
-                    UserName = model.Name,
-                    Email = model.Email
+                    Title = model.Title,
+                    DateReleased = model.DateReleased,
+                    Duration = model.Duration,
+                    Director = model.Director,
+                    Cast = model.Cast,
+                    Desc = model.Desc,
+                    Price = model.Price
                 };
-                IdentityResult result
-                = await userManager.CreateAsync(user, model.Password);
+                //IdentityResult result
+                //= await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index");
@@ -164,7 +169,7 @@ namespace MovieStore.Controllers
                 }
             }
             return View(model);
-        }
+        }*/
         private void AddErrorsFromResult(IdentityResult result)
         {
             foreach (IdentityError error in result.Errors)

@@ -45,12 +45,18 @@ namespace MovieStore.Models
     public class MovieModel
     {
         [Required]
-        public string Name { get; set; }
+        public string Title { get; set; }
         [Required]
-        public double Price { get; set; }
+        public DateTime DateReleased { get; set; }
         [Required]
-        public DateTime StartingDate { get; set; }
+        public int Duration { get; set; }
         [Required]
-        public DateTime EndingDate { get; set; }
+        public string Director { get; set; }
+        [Required]
+        public List<string> Cast { get; set; }
+        [Required]
+        public string Desc { get; set; }
+        [Required]
+        public decimal Price { get; set; }
     }
 }
