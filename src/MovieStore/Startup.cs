@@ -42,6 +42,8 @@ namespace MovieStore
                 opts.Password.RequireDigit = false;
             }).AddEntityFrameworkStores<AppIdentityDbContext>();
 
+            services.AddTransient<IMovieRepository, FakeMovieRepository>();
+
             services.AddMvc();
         }
 
@@ -70,12 +72,6 @@ namespace MovieStore
                     name: "Cart",
                     template: "Cart",
                     defaults: new { controller = "Cart", action = "ViewCart" });
-
-                routes.MapRoute(
-                    name: "Staff",
-                    template: "{controller}",
-                    defaults: new { controller = "Staff", action = "StaffProfile" }
-                    );
 
                 routes.MapRoute(
                     name: "default",
