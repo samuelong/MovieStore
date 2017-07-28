@@ -28,7 +28,13 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="/Cart">Cart</a></li>
                     <li><a href="/Profile">Profile</a></li>
-                    <li><a href="#">Log Out</a></li>
+                    <li>
+                        @if (User?.Identity?.IsAuthenticated ?? false)
+                        {
+                            <a asp-controller="Account" asp-action="Logout"
+                               class="btn btn-danger">Logout</a>
+                        }
+                    </li>
                 </ul>
             </div>
         </div>

@@ -54,11 +54,6 @@ namespace MovieStore
             app.UseIdentity();
             app.UseMvc(routes =>
             {
-                routes.MapRoute(
-                    name: "Login",
-                    template: "{controller?}/Login",
-                    defaults: new { controller = "Account", action = "Login" }
-                    );
 
                 routes.MapRoute(
                     name: "Empty",

@@ -6,10 +6,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MovieStore.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace MovieStore.Controllers
 {
-    [Authorize(Roles = "Admins"]
+    [Authorize(Roles = "Admins")]
     public class AccountController : Controller
     {
         private UserManager<AppUser> userManager;
@@ -44,7 +45,11 @@ namespace MovieStore.Controllers
                     user, details.Password, false, false);
                     if (result.Succeeded)
                     {
-                        return Redirect(returnUrl ?? "/");
+                        if (User.IsInRole("Admins"))
+                            // Admin Homepage Redirect
+                            return Redirect("/Admin/Index");
+                        else
+                            return Redirect("/Home/HomePage");
                     }
                 }
                 ModelState.AddModelError(nameof(LoginModel.Email), "Invalid user or password");
