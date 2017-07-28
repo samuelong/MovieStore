@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MovieStore.Models
 {
+    [Authorize]
     public class Cart : IEnumerable<Cart>
     {
         private List<RentalInfo> items = new List<RentalInfo>();

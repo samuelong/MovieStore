@@ -12,23 +12,37 @@ namespace MovieStore.Controllers
     public class HomeController : Controller
     {
         // GET: /<controller>/
-        //[Authorize]
+        [Authorize]
         public IActionResult GoToHomePage()
         {
             return View("HomePage");
         }
 
-        //[Authorize]
+        [Authorize]
         public IActionResult ViewMovies()
         {
             return View("Movie");
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         public ActionResult GoToPayment()
         {
             return View("Payment");
         }
+
+        [Authorize]
+        public IActionResult Index() => View(GetData(nameof(Index)));
+        [Authorize(Roles = "Users")]
+        public IActionResult OtherAction() => View("Index", GetData(nameof(OtherAction)));
+
+        private Dictionary<string, object> GetData(string actionName) => new Dictionary<string, object>
+        {
+            ["Action"] = actionName,
+            ["User"] = HttpContext.User.Identity.Name,
+            ["Authenticated"] = HttpContext.User.Identity.IsAuthenticated,
+            ["Auth Type"] = HttpContext.User.Identity.AuthenticationType,
+            ["In Users Role"] = HttpContext.User.IsInRole("Users")
+        };
     }
 }

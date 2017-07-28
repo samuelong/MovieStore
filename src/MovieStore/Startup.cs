@@ -55,9 +55,15 @@ namespace MovieStore
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "Login",
+                    template: "{controller?}/Login",
+                    defaults: new { controller = "Account", action = "Login" }
+                    );
+
+                routes.MapRoute(
                     name: "Empty",
                     template: "",
-                    defaults: new { controller = "Home", action = "GoToHomePage" }
+                    defaults: new { controller = "Account", action = "Login" }
                     );
 
                 routes.MapRoute(
@@ -81,6 +87,8 @@ namespace MovieStore
                     template: "{controller}/{action}/{id?}",
                     defaults: new { controller = "Home", action = "GoToHomePage" }
                     );
+
+                AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
             }
             );
         }

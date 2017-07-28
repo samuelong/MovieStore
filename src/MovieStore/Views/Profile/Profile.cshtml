@@ -7,15 +7,22 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
+            
             var slider = $('#slider').slider({
                 range: "min",
                 min: 1,
                 max: 7,
                 orientation: "horizontal",
+                slide: function (event, ui) {
+                    var date = new Date();
+                    date.setDate(date.getUTCDate() + ui.value);
+                    document.getElementById("spnOutput").innerHTML = date.toDateString() + " -> " + date.toLocaleTimeString();
+                    if (new Date().getUTCDate)
+                    document.getElementById("spnPrice").innerHTML
+                }
             });
-
         }
-        )
+        );
     </script>
     <div class="row panel panel-default text-center">
         <div class="col-xs-12 panel-heading">
@@ -23,9 +30,7 @@
             <small>Profile Page</small></h1>
         </div>
     </div>
-    <div class="row">
-        <div class="col-xs-6">
-            <table class="table table-bordered table-responsive table-hover">
+    <div class="row"> 
                 <tr>
                     <td class="col-xs-4">UserID</td>
                     <td class="col-xs-8">@Model.MemberID</td>
@@ -47,10 +52,17 @@
                 <tr class="row">
                     <th class="col-xs-6">Movie Name</th>
                     <th class="col-xs-2">Rental Extension</th>
-                    <th class="col-xs-4">
+                    <th class="col-xs-4">Extension Price</th>
+                </tr>
+                <tr>
+                    <td>Hulk</td>
+                    <td>
                         <span id="spnOutput"></span>
                         <div id="slider"></div>
-                    </th>
+                    </td>
+                    <td>
+                        <span id="spnPrice"></span>
+                    </td>
                 </tr>
             </table>
         </div>

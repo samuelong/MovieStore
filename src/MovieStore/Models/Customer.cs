@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MovieStore.Models
 {
+    [Authorize]
     public class Customer
     {
         public string MemberID { get; set; }
