@@ -1,2 +1,9 @@
 ﻿<div class="bg-danger panel-body"><h4>Access Denied</h4></div>
-<a asp-action="HomePage" asp-controller="Home" class="btn btn-primary">Go back</a>
+@if (User.IsInRole("Admins"))
+{
+    <a asp-action="HomePage" asp-controller="Home" class="btn btn-primary">Go back</a>
+}
+else
+{
+    <a asp-action="HomePage" asp-controller="Admin" class="btn btn-primary">Go back</a>
+}
