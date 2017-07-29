@@ -8,7 +8,7 @@ using MovieStore.Models;
 namespace MovieStore.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20170729062524_MovieStore")]
+    [Migration("20170729091306_MovieStore")]
     partial class MovieStore
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -203,9 +203,11 @@ namespace MovieStore.Migrations
 
                     b.Property<DateTime>("DateofTransaction");
 
-                    b.Property<string>("UserID");
+                    b.Property<string>("Id");
 
                     b.HasKey("PaymentID");
+
+                    b.HasIndex("Id");
 
                     b.ToTable("Payments");
                 });
@@ -219,13 +221,13 @@ namespace MovieStore.Migrations
 
                     b.Property<DateTime>("EndRentalDate");
 
-                    b.Property<int>("MovieID");
-
-                    b.Property<int>("PaymentID");
-
                     b.Property<DateTime>("StartRentalDate");
 
+                    b.Property<string>("Title");
+
                     b.HasKey("RentalID");
+
+                    b.HasIndex("Title");
 
                     b.ToTable("Rentals");
                 });
@@ -265,6 +267,20 @@ namespace MovieStore.Migrations
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MovieStore.Models.Payment", b =>
+                {
+                    b.HasOne("MovieStore.Models.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("Id");
+                });
+
+            modelBuilder.Entity("MovieStore.Models.Rental", b =>
+                {
+                    b.HasOne("MovieStore.Models.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("Title");
                 });
         }
     }
