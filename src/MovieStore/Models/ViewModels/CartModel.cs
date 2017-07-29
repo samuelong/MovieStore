@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace MovieStore.Models.ViewModels
 {
-    public class Cart
+    public class CartModel
     {
-        private List<Rental> items = new List<Rental>();
+        private List<RentalModel> items = new List<RentalModel>();
 
-        public Cart(params Rental[] ri)
+        public CartModel(params RentalModel[] ri)
         {
             items.AddRange(ri);
         }
 
-        public List<Rental> GetCart()
+        public List<RentalModel> GetCart()
         { return items; }
     }
 }

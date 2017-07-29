@@ -21,9 +21,9 @@ namespace MovieStore.Controllers
             // Returning View with Cart
             return View
             ("Cart", 
-                new Cart
+                new CartModel
                 (
-                    new Models.ViewModels.Rental
+                    new Models.ViewModels.RentalModel
                     (
                         new Movie("test1", Convert.ToDateTime("2017-07-24"), 140, "Test1Director",
                         "Actor 1, Actor 2",
@@ -33,7 +33,7 @@ namespace MovieStore.Controllers
                         Convert.ToDateTime("2017-08-29"),
                         Convert.ToDateTime("2017-09-20")
                     ),
-                    new Models.ViewModels.Rental
+                    new Models.ViewModels.RentalModel
                     (
                         new Movie("test2", Convert.ToDateTime("2016-07-24"), 140, "Test2Director",
                         "Actor 1, Actor 2",
