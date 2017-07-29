@@ -7,9 +7,9 @@ namespace MovieStore.Models
 {
     public class EFMovieRepository : IMovieRepository
     {
-        private ApplicationDbContext context;
+        private AppIdentityDbContext context;
 
-        public EFMovieRepository(ApplicationDbContext ctx)
+        public EFMovieRepository(AppIdentityDbContext ctx)
         {
             context = ctx;
         }

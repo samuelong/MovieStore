@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using MovieStore.Models;
+using MovieStore.Models.ViewModels;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,13 +23,30 @@ namespace MovieStore.Controllers
             repository = repo;
         }
 
-
-
         public ViewResult List(int page = 1)
-            => View(repository.Movies
-                .OrderBy(p => p.Title)
-                .Skip((page - 1) * PageSize)
-                .Take(PageSize));
+             => View(new MoviesListViewModel
+             {
+
+                 Movies = repository.Movies
+
+                     .OrderBy(p => p.Title)
+
+                     .Skip((page - 1) * PageSize)
+
+                     .Take(PageSize),
+
+                 PagingInfo = new PagingInfo
+                 {
+
+                     CurrentPage = page,
+
+                     ItemsPerPage = PageSize,
+
+                     TotalItems = repository.Movies.Count()
+
+                 }
+
+             });
 
         private void AddErrorsFromResult(IdentityResult result)
         {
