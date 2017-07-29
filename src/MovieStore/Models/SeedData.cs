@@ -19,6 +19,9 @@ namespace MovieStore.Models
                 appContext.Payments.AddRange(
                     new Payment("", Convert.ToDateTime("02/05/2016"), 2.03m)
                 );
+                appContext.Movies.AddRange(
+                    new Movie("Superman", new DateTime(2017, 1, 1), 60, "Brandon", new List<string> { "Brandon", "Samuel", "Jourdan" }, "", 100)
+                );
                 appContext.SaveChanges();
             }
         }

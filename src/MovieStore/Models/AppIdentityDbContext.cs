@@ -47,5 +47,6 @@ namespace MovieStore.Models
         // Payment Table with Rental Table
         public DbSet<Rental> Rentals { get; set; }
         public DbSet<Payment> Payments { get; set; }
+        public DbSet<Movie> Movies { get; set; }
     }
 }

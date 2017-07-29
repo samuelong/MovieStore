@@ -14,6 +14,6 @@ namespace MovieStore.Models
             context = ctx;
         }
 
-        public IEnumerable<Movie> Movies => context.Products;
+        public IEnumerable<Movie> Movies => context.Movies;
     }
 }
