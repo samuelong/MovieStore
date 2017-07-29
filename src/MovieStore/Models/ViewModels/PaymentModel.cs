@@ -2,15 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 using System.Collections;
 
 namespace MovieStore.Models.ViewModels
 {
-    public class CartModel : IEnumerable<CartModel>
+    public class PaymentModel : IEnumerable<PaymentModel>
     {
-        public List<Rental> Rentals { get; set; }
+        public PaymentModel() { }
+        public AppUser User { get; set; }
 
-        public IEnumerator<CartModel> GetEnumerator()
+        public decimal AmountPaid { get; set; }
+
+        public ICollection<Rental> Rentals { get; set; }
+
+        public IEnumerator<PaymentModel> GetEnumerator()
         {
             yield return this;
         }
