@@ -8,8 +8,6 @@ using Microsoft.AspNetCore.Identity;
 using MovieStore.Models;
 using MovieStore.Models.ViewModels;
 
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace MovieStore.Controllers
 {
     [Authorize(Roles = "Admins")]
@@ -50,12 +48,38 @@ namespace MovieStore.Controllers
 
              });
 
-        private void AddErrorsFromResult(IdentityResult result)
+        public ViewResult EditMovie(string title) =>
+            View(repository.Movies
+                .FirstOrDefault(m => m.Title == title));
+
+        [HttpPost]
+        public IActionResult EditMovie(Movie movie)
         {
-            foreach (IdentityError error in result.Errors)
+            if (ModelState.IsValid)
             {
-                ModelState.AddModelError("", error.Description);
+                repository.SaveMovie(movie);
+                TempData["message"] = $"{movie.Title} has been saved";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(movie);
             }
         }
+
+        public ViewResult Create() => View("EditMovie", new Movie());
+
+        [HttpPost]
+        public IActionResult Delete(string title)
+        {
+            Movie deletedMovie = repository.DeleteMovie(title);
+            if (deletedMovie != null)
+            {
+                TempData["message"] = $"{deletedMovie.Title} was deleted";
+            }
+            return RedirectToAction("Index");
+        }
+
+        public ViewResult HomePage() => View("HomePage");
     }
 }

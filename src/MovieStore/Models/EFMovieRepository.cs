@@ -15,5 +15,41 @@ namespace MovieStore.Models
         }
 
         public IEnumerable<Movie> Movies => context.Movies;
+
+        public void SaveMovie(Movie movie)
+        {
+            if (movie.Title == "")
+            {
+                context.Movies.Add(movie);
+            }
+            else
+            {
+                Movie dbEntry = context.Movies
+                    .FirstOrDefault(m => m.Title == movie.Title);
+                if (dbEntry != null)
+                {
+                    dbEntry.Title = movie.Title;
+                    dbEntry.DateReleased = movie.DateReleased;
+                    dbEntry.Duration = movie.Duration;
+                    dbEntry.Director = movie.Director;
+                    dbEntry.Cast = movie.Cast;
+                    dbEntry.Desc = movie.Desc;
+                    dbEntry.Price = movie.Price;
+                }
+            }
+            context.SaveChanges();
+        }
+
+        public Movie DeleteMovie(string title)
+        {
+            Movie dbEntry = context.Movies
+                .FirstOrDefault(m => m.Title == title);
+            if (dbEntry != null)
+            {
+                context.Movies.Remove(dbEntry);
+                context.SaveChanges();
+            }
+            return dbEntry;
+        }
     }
 }
