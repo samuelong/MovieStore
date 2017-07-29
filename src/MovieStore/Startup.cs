@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MovieStore.Infrastructure;
 using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace MovieStore
 {
@@ -79,7 +80,15 @@ namespace MovieStore
                     defaults: new { controller = "Home", action = "GoToHomePage" }
                     );
 
-                AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
+                try
+                {
+                    AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
+                }
+                catch (AggregateException e)
+                {
+
+                }
+               
             }
             );
             SeedData.EnsurePopulated(app);

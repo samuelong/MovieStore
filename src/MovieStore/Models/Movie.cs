@@ -15,11 +15,11 @@ namespace MovieStore.Models
         public DateTime DateReleased { get; set; }
         public int Duration { get; set; }
         public string Director { get; set; }
-        public List<string> Cast { get; set; }
+        public string Cast { get; set; }
         public string Desc { get; set; }
         public decimal Price { get; set; }
 
-        public Movie(string title, DateTime dateReleased, int duration, string director, List<string> cast, string desc, decimal price)
+        public Movie(string title, DateTime dateReleased, int duration, string director, string cast, string desc, decimal price)
         {
             Title = title;
             DateReleased = dateReleased;

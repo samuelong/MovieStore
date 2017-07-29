@@ -26,11 +26,7 @@ namespace MovieStore.Controllers
                     new Models.ViewModels.Rental
                     (
                         new Movie("test1", Convert.ToDateTime("2017-07-24"), 140, "Test1Director",
-                        new List<string>()
-                        {
-                            "Actor1",
-                            "Actor2"
-                        },
+                        "Actor 1, Actor 2",
                         "A test show",
                         20.5m
                         ),
@@ -40,11 +36,7 @@ namespace MovieStore.Controllers
                     new Models.ViewModels.Rental
                     (
                         new Movie("test2", Convert.ToDateTime("2016-07-24"), 140, "Test2Director",
-                        new List<string>()
-                        {
-                            "Actor1",
-                            "Actor2"
-                        },
+                        "Actor 1, Actor 2",
                         "A test2 show",
                         32.4m
                         ),
