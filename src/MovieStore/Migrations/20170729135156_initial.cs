@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace MovieStore.Migrations
 {
-    public partial class initial : Migration
+    public partial class MovieStore : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -194,24 +194,18 @@ namespace MovieStore.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Cost = table.Column<decimal>(nullable: false),
                     EndRentalDate = table.Column<DateTime>(nullable: false),
-                    PaymentID = table.Column<int>(nullable: true),
-                    StartRentalDate = table.Column<DateTime>(nullable: false),
-                    Title = table.Column<string>(nullable: true)
+                    Id = table.Column<string>(nullable: true),
+                    MovieID = table.Column<int>(nullable: false),
+                    StartRentalDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Rentals", x => x.RentalID);
                     table.ForeignKey(
-                        name: "FK_Rentals_Payments_PaymentID",
-                        column: x => x.PaymentID,
-                        principalTable: "Payments",
-                        principalColumn: "PaymentID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Rentals_Movies_Title",
-                        column: x => x.Title,
-                        principalTable: "Movies",
-                        principalColumn: "Title",
+                        name: "FK_Rentals_AspNetUsers_Id",
+                        column: x => x.Id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -257,17 +251,7 @@ namespace MovieStore.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payments_Id",
-                table: "Payments",
-                column: "Id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Rentals_PaymentID",
-                table: "Rentals",
-                column: "PaymentID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Rentals_Title",
+                name: "IX_Rentals_Id",
                 table: "Rentals",
                 column: "Title");
         }
@@ -290,10 +274,10 @@ namespace MovieStore.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Rentals");
+                name: "Movies");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "Payments");
 
             migrationBuilder.DropTable(
                 name: "Payments");
@@ -303,6 +287,9 @@ namespace MovieStore.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Movies");
         }
     }
 }
