@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MovieStore.Models.ViewModels;
 using MovieStore.Models;
 using Microsoft.AspNetCore.Authorization;
 
@@ -22,7 +23,7 @@ namespace MovieStore.Controllers
             ("Cart", 
                 new Cart
                 (
-                    new RentalInfo
+                    new Models.ViewModels.Rental
                     (
                         new Movie("test1", Convert.ToDateTime("2017-07-24"), 140, "Test1Director",
                         new List<string>()
@@ -36,7 +37,7 @@ namespace MovieStore.Controllers
                         Convert.ToDateTime("2017-08-29"),
                         Convert.ToDateTime("2017-09-20")
                     ),
-                    new RentalInfo
+                    new Models.ViewModels.Rental
                     (
                         new Movie("test2", Convert.ToDateTime("2016-07-24"), 140, "Test2Director",
                         new List<string>()

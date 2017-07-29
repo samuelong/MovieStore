@@ -12,6 +12,7 @@ namespace MovieStore.Models
     {
         public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options)
         : base(options) { }
+
         public static async Task CreateAdminAccount(IServiceProvider serviceProvider,
         IConfiguration configuration)
         {
@@ -42,5 +43,9 @@ namespace MovieStore.Models
                 }
             }
         }
+
+        // Payment Table with Rental Table
+        public DbSet<Rental> Rentals { get; set; }
+        public DbSet<Payment> Payments { get; set; }
     }
 }
