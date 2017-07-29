@@ -47,9 +47,9 @@ namespace MovieStore.Controllers
                     {
                         if (User.IsInRole("Admins"))
                             // Admin Homepage Redirect
-                            return Redirect("/Admin/Index");
+                            return Redirect("/Admin/HomePage");
                         else
-                            return Redirect("/Home/HomePage");
+                            return Redirect("/Home/GoToHomePage");
                     }
                 }
                 ModelState.AddModelError(nameof(LoginModel.Email), "Invalid user or password");

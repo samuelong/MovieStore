@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Collections;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,6 +18,11 @@ namespace MovieStore.Controllers
     [Authorize(Roles = "Users")]
     public class CartController : Controller
     {
+        AppIdentityDbContext db;
+        public CartController(AppIdentityDbContext context)
+        {
+            db = context;
+        }
         // GET: /<controller>/
 
         public IActionResult ViewCart()
@@ -62,7 +68,6 @@ namespace MovieStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                var db = new AppIdentityDbContext(null);
                 Payment p = new Payment()
                 {
                     DateofTransaction = DateTime.Now,
