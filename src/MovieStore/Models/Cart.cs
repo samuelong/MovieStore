@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MovieStore.Models
 {
-    [Authorize]
     public class Cart : IEnumerable<Cart>
     {
         private List<RentalInfo> items = new List<RentalInfo>();
