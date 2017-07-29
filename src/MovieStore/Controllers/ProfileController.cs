@@ -24,11 +24,12 @@ namespace MovieStore.Controllers
 
 
         // GET: /<controller>/
-        /*public async Task<IActionResult> Profile(IHttpContextAccessor httpContextAccessor)
+        private Task<AppUser> GetCurrentUserAsync() => userManager.GetUserAsync(HttpContext.User);
+
+        public async Task<ActionResult> Profile()
         {
-            var userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            //AppUser user = userManager.FindByIdAsync(userId);
+            AppUser user = await GetCurrentUserAsync();
+            return View(user);
         }
-        */
     }
 }
