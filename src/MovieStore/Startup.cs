@@ -27,7 +27,7 @@ namespace MovieStore
             services.AddTransient<IPasswordValidator<AppUser>, CustomPasswordValidator>();
             services.AddTransient<IUserValidator<AppUser>, CustomUserValidator>();
 
-            services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration["Data:MovieStoreIdentity:ConnectionString"]));
+            services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration["Data:MovieStore:ConnectionString"]));
             services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<AppIdentityDbContext>();
 
             services.AddIdentity<AppUser, IdentityRole>(opts => {
@@ -43,7 +43,6 @@ namespace MovieStore
             }).AddEntityFrameworkStores<AppIdentityDbContext>();
 
             services.AddTransient<IMovieRepository, FakeMovieRepository>();
-
             services.AddMvc();
         }
 
@@ -82,6 +81,7 @@ namespace MovieStore
                 AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
             }
             );
+            SeedData.EnsurePopulated(app);
         }
     }
 }
