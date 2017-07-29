@@ -4,13 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections;
 using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MovieStore.Models
 {
     [Authorize]
     public class Movie : IEnumerable<Movie>
     {
-
+        [Key]
         public string Title { get; set; }
         public DateTime DateReleased { get; set; }
         public int Duration { get; set; }
