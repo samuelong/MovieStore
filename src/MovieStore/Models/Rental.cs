@@ -13,9 +13,8 @@ namespace MovieStore.Models
         [Key]
         public int RentalID { get; set; }
 
-        [ForeignKey("Payment")]
-        public int PaymentID { get; set; }
-        public int MovieID { get; set; }
+        [ForeignKey("Title")]
+        public Movie Movie { get; set; }
         public DateTime StartRentalDate { get; set; }
         public DateTime EndRentalDate { get; set; }
         public decimal Cost { get; set; }
