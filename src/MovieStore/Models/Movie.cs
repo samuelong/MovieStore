@@ -21,6 +21,8 @@ namespace MovieStore.Models
         public string Desc { get; set; }
         public decimal Price { get; set; }
 
+        public Movie() { }
+
         public Movie(string title, DateTime dateReleased, int duration, string director, string cast, string desc, decimal price)
         {
             Title = title;
