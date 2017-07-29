@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MovieStore.Models
 {
-    [Authorize]
     public class Customer
     {
         public string MemberID { get; set; }
