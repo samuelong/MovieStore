@@ -13,8 +13,8 @@ namespace MovieStore.Models
         [Key]
         public int RentalID { get; set; }
 
-        [ForeignKey("Payment")]
-        public int PaymentID { get; set; }
+        //[ForeignKey("Id")]
+        //public virtual Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser IdentityUser { get; set; }
         public int MovieID { get; set; }
         public DateTime StartRentalDate { get; set; }
         public DateTime EndRentalDate { get; set; }
