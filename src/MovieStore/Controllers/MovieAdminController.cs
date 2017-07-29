@@ -23,6 +23,8 @@ namespace MovieStore.Controllers
             repository = repo;
         }
 
+        public ViewResult Index() => View(repository.Movies);
+
         public ViewResult List(int page = 1)
              => View(new MoviesListViewModel
              {
