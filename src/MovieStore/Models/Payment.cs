@@ -12,9 +12,9 @@ namespace MovieStore.Models
     {
         public Payment() { }
         
-        public Payment(string userID, DateTime dateofTransaction, decimal amountPaid)
+        public Payment(AppUser user, DateTime dateofTransaction, decimal amountPaid)
         {
-            UserID = userID;
+            User = user;
             DateofTransaction = dateofTransaction;
             AmountPaid = amountPaid;
         }
@@ -24,8 +24,8 @@ namespace MovieStore.Models
         public int PaymentID { get; set; }
 
         //[Required]
-        [ForeignKey("AppUser")]
-        public string UserID { get; set; }
+        [ForeignKey("Id")]
+        public virtual AppUser User { get; set; }
 
         //[Required]
         [DisplayFormat(DataFormatString = "dd/mm/yyyy")]
