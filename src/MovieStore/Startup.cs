@@ -33,6 +33,7 @@ namespace MovieStore
             services.AddIdentity<AppUser, IdentityRole>()
             .AddEntityFrameworkStores<AppIdentityDbContext>()
             .AddDefaultTokenProviders();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddIdentity<AppUser, IdentityRole>(opts => {
 
                 opts.User.RequireUniqueEmail = true;
