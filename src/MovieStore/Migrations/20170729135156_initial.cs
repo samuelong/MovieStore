@@ -194,17 +194,18 @@ namespace MovieStore.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Cost = table.Column<decimal>(nullable: false),
                     EndRentalDate = table.Column<DateTime>(nullable: false),
-                    StartRentalDate = table.Column<DateTime>(nullable: false),
-                    Title = table.Column<string>(nullable: true)
+                    Id = table.Column<string>(nullable: true),
+                    MovieID = table.Column<int>(nullable: false),
+                    StartRentalDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Rentals", x => x.RentalID);
                     table.ForeignKey(
-                        name: "FK_Rentals_Movies_Title",
-                        column: x => x.Title,
-                        principalTable: "Movies",
-                        principalColumn: "Title",
+                        name: "FK_Rentals_AspNetUsers_Id",
+                        column: x => x.Id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -250,12 +251,7 @@ namespace MovieStore.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payments_Id",
-                table: "Payments",
-                column: "Id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Rentals_Title",
+                name: "IX_Rentals_Id",
                 table: "Rentals",
                 column: "Title");
         }
@@ -278,13 +274,16 @@ namespace MovieStore.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Movies");
+
+            migrationBuilder.DropTable(
                 name: "Payments");
 
             migrationBuilder.DropTable(
-                name: "Rentals");
+                name: "Payments");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "Movies");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

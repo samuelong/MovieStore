@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using MovieStore.Models.ViewModels;
 using MovieStore.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Collections;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,37 +18,82 @@ namespace MovieStore.Controllers
     [Authorize(Roles = "Users")]
     public class CartController : Controller
     {
+        AppIdentityDbContext db;
+        public CartController(AppIdentityDbContext context)
+        {
+            db = context;
+        }
         // GET: /<controller>/
 
         public IActionResult ViewCart()
         {
-            // Returning View with Cart
-            return View
-            ("Cart", 
-                new CartModel
-                (
-                    new Models.ViewModels.RentalModel
-                    (
-                        new Movie("test1", Convert.ToDateTime("2017-07-24"), 140, "Test1Director",
-                        "Actor 1, Actor 2",
-                        "A test show",
-                        20.5m
-                        ),
-                        Convert.ToDateTime("2017-08-29"),
-                        Convert.ToDateTime("2017-09-20")
-                    ),
-                    new Models.ViewModels.RentalModel
-                    (
-                        new Movie("test2", Convert.ToDateTime("2016-07-24"), 140, "Test2Director",
-                        "Actor 1, Actor 2",
-                        "A test2 show",
-                        32.4m
-                        ),
-                        Convert.ToDateTime("2017-08-29"),
-                        Convert.ToDateTime("2017-09-20")
-                    )
-                )
-            );
+            if (TempData["Movies"] is List<Movie>)
+            {
+                List<Rental> rentals = new List<Rental>();
+                foreach (Movie m in (List<Movie>)TempData["Movies"])
+                {
+                    rentals.Add(new Rental()
+                    {
+                        Movie = m,
+                        StartRentalDate = DateTime.Now,
+                        EndRentalDate = DateTime.Now.AddDays(7)
+                    });
+                }
+                CartModel model = new CartModel()
+                {
+                    Rentals = rentals
+                };
+                return View("Cart", model);
+            }
+            else
+            {
+                ViewBag.Error = "No Movies Found.";
+                return View("Cart");
+            }
+        }
+
+        public RedirectToActionResult GoToPayment(CartModel model)
+        {
+            PaymentModel Paymentmodel = new PaymentModel()
+            {
+                Rentals = model.Rentals,
+                AmountPaid = model.Rentals.Sum(s => s.Cost * (s.EndRentalDate - s.StartRentalDate).Days)
+                // User
+            };
+            return RedirectToAction("CreatePayment", Paymentmodel);
+        }
+
+        [HttpPost]
+        public ActionResult CreatePayment(PaymentModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Payment p = new Payment()
+                {
+                    DateofTransaction = DateTime.Now,
+                    AmountPaid = model.AmountPaid,
+                    User = model.User
+                };
+                db.Payments.Add(
+                    p
+                );
+                foreach (Rental rental in p.Rentals)
+                {
+                    db.Rentals.Add(new Rental()
+                    {
+                        Movie = rental.Movie,
+                        Payment = p,
+                        StartRentalDate = rental.StartRentalDate,
+                        EndRentalDate = rental.EndRentalDate
+                    }
+                    );
+                }
+                db.SaveChanges();
+            }
+            else
+                TempData["Error"] = "Payment Failed";
+            return View("Payment");
         }
     }
+
 }

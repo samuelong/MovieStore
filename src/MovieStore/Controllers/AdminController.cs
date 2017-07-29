@@ -147,5 +147,7 @@ namespace MovieStore.Controllers
                 ModelState.AddModelError("", error.Description);
             }
         }
+
+        public ViewResult HomePage() => View("HomePage");
     }
 }

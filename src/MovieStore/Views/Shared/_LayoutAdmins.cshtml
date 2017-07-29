@@ -29,7 +29,11 @@
                     <li><a href="/Audit/Index">Audit</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Log Out</a></li>
+                    @if (User?.Identity?.IsAuthenticated ?? false)
+                    {
+                        <a asp-controller="Account" asp-action="Logout"
+                           class="btn btn-danger">Logout</a>
+                    }
                 </ul>
             </div>
         </div>

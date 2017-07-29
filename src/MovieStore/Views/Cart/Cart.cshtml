@@ -1,12 +1,13 @@
 ﻿@{ Layout = "_LayoutUsers";}
-@model MovieStore.Models.Cart
+@model MovieStore.Models.ViewModels.CartModel
 @using System.Globalization;
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-12">
             <table class="table table-bordered table-condensed table-hover table-responsive">
-                @foreach (var m in Model.GetCart())
+                @ViewBag.Error
+                @foreach (var m in Model.Rentals)
                 {
                     <tr>
                         <th class="col-xs-6">Movie Name</th>
@@ -15,18 +16,23 @@
                     </tr>
                     <tr>
                         <td>@m.Movie.Title</td>
-                        <td>@m.Movie.Price.ToString("C2", CultureInfo.CurrentCulture)</td>
-                        <td>@m.StartRentalDate-@m.EndRentalDate</td>
+                        <td>@{m.Cost.ToString("C2", CultureInfo.CurrentCulture)}</td>
+                        <td>@m.StartRentalDate</td>
+                        <td>@m.EndRentalDate</td>
                     </tr>
                 }
             </table>
         </div>
     </div>
+    @if (ViewBag.Error == null)
+    {
     <div class="row">
         <div class="col-xs-3">
-            <form enctype="application/x-www-form-urlencoded" action="/Home/GoToPayment" method="post">
-                <input type="submit" />
+            <form enctype="application/x-www-form-urlencoded" action="/Cart/GoToPayment" method="post" >
+                <input type="submit" class="btn-success" value="Purchase" />
+                @Html.HiddenFor(m => m.Rentals)
             </form>
         </div>
     </div>
+    }
 </div>

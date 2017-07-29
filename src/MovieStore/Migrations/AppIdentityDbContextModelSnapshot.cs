@@ -220,11 +220,15 @@ namespace MovieStore.Migrations
 
                     b.Property<DateTime>("EndRentalDate");
 
+                    b.Property<int?>("PaymentID");
+
                     b.Property<DateTime>("StartRentalDate");
 
                     b.Property<string>("Title");
 
                     b.HasKey("RentalID");
+
+                    b.HasIndex("PaymentID");
 
                     b.HasIndex("Title");
 
@@ -277,6 +281,10 @@ namespace MovieStore.Migrations
 
             modelBuilder.Entity("MovieStore.Models.Rental", b =>
                 {
+                    b.HasOne("MovieStore.Models.Payment", "Payment")
+                        .WithMany("Rentals")
+                        .HasForeignKey("PaymentID");
+
                     b.HasOne("MovieStore.Models.Movie", "Movie")
                         .WithMany()
                         .HasForeignKey("Title");

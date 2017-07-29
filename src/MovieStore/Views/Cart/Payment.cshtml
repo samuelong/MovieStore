@@ -1,13 +1,24 @@
 ﻿@{ Layout = "_LayoutUsers";}
+@model MovieStore.Models.ViewModels.PaymentModel
 
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
-            <form action="" method="post">
-                <table class="table-responsive table table-striped>
+            <form action="/Cart/CreatePayment" method="post">
+                @ViewBag["Message"]
+                <table class="table-responsive table table-striped">
                     <tr>
-                        <td></td>
+                        <td colspan="2">The total cost is @ViewBag.TotalCost.</td>
+                        <td><input type="submit" value="Purchase" /></td>
                     </tr>
+                    @foreach(var Rentals in Model.Rentals)
+                    {
+                        <tr>
+                            <td>@Rentals.Movie.Title</td>
+                            <td>@Rentals.Movie.Price per day, over a period of 7 days.</td>
+                            <td></td>
+                        </tr>
+                    }
                 </table>
             </form>
         </div>
