@@ -42,7 +42,8 @@ namespace MovieStore
                 opts.Password.RequireDigit = false;
             }).AddEntityFrameworkStores<AppIdentityDbContext>();
 
-            services.AddTransient<IMovieRepository, FakeMovieRepository>();
+            services.AddTransient<IMovieRepository, EFMovieRepository>();
+
             services.AddMvc();
         }
 
