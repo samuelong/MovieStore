@@ -48,12 +48,12 @@ namespace MovieStore.Controllers
 
              });
 
-        public ViewResult EditMovie(string title) =>
+        public ViewResult Edit(string title) =>
             View(repository.Movies
                 .FirstOrDefault(m => m.Title == title));
 
         [HttpPost]
-        public IActionResult EditMovie(Movie movie)
+        public IActionResult Edit(Movie movie)
         {
             if (ModelState.IsValid)
             {
@@ -67,7 +67,7 @@ namespace MovieStore.Controllers
             }
         }
 
-        public ViewResult Create() => View("EditMovie", new Movie());
+        public ViewResult Create() => View("Edit", new Movie());
 
         [HttpPost]
         public IActionResult Delete(string title)
