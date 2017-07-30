@@ -8,13 +8,22 @@ namespace Users.Controllers
     public class RegisController : Controller
     {
         private UserManager<AppUser> userManager;
+        public RegisController(UserManager<AppUser> usrMgr)
+        {
+            userManager = usrMgr;
+        }
         public ViewResult Index() => View();
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateModel model)
+        public async Task<IActionResult> Create(CreateModel model, string confirmPass)
         {
             if (ModelState.IsValid)
             {
+                if (confirmPass != model.Password)
+                {
+                    ModelState.AddModelError("match", "Password does not match" + confirmPass + model.Password);
+                    return View("Index", model);
+                }
                 AppUser user = new AppUser
                 {
                     UserName = model.Name,
@@ -34,7 +43,7 @@ namespace Users.Controllers
                     }
                 }
             }
-            return View(model);
+            return View("Index", model);
         }
     }
 }
