@@ -44,7 +44,7 @@ namespace MovieStore.Models
 
     public class MovieModel
     {
-        [Required]
+        public int MovieID { get; set; }
         public string Title { get; set; }
         public DateTime DateReleased { get; set; }
         public int Duration { get; set; }
