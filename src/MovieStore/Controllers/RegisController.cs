@@ -1,19 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+using MovieStore.Models;
+using System.Threading.Tasks;
 
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-
-namespace MovieStore.Controllers
+namespace Users.Controllers
 {
     public class RegisController : Controller
     {
-        // GET: /<controller>/
-        public ViewResult Index() => View(new Dictionary<string, object> { ["Placeholder"] = "Placeholder" });
+        private UserManager<AppUser> userManager;
+        public ViewResult Index() => View();
 
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                AppUser user = new AppUser
+                {
+                    UserName = model.Name,
+                    Email = model.Email
+                };
+                IdentityResult result
+                = await userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    foreach (IdentityError error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                }
+            }
+            return View(model);
+        }
     }
 }

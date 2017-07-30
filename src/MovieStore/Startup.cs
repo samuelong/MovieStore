@@ -45,6 +45,14 @@ namespace MovieStore
             }).AddEntityFrameworkStores<AppIdentityDbContext>();
 
             services.AddTransient<IMovieRepository, EFMovieRepository>();
+            // Adds a default in-memory implementation of IDistributedCache.
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                // Set a short timeout for easy testing.
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.CookieHttpOnly = true;
+            });
 
             services.AddMvc();
         }
@@ -56,6 +64,7 @@ namespace MovieStore
             app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
             app.UseIdentity();
+            app.UseSession();
             app.UseMvc(routes =>
             {
 

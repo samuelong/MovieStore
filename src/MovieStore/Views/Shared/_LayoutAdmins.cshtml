@@ -26,7 +26,6 @@
                     <li><a href="/Admin/Index">User Admin</a></li>
                     <li><a href="/RoleAdmin/Index">Role Admin</a></li>
                     <li><a href="/MovieAdmin/Index">Movie Admin</a></li>
-                    <li><a href="/Audit/Index">Audit</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @if (User?.Identity?.IsAuthenticated ?? false)
@@ -41,6 +40,10 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
+                @if (TempData["message"] != null)
+                {
+                    <div class="alert alert-success">@TempData["message"]</div>
+                }
                 @RenderBody()
             </div>
         </div>
