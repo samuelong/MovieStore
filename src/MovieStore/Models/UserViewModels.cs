@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
+using System.Collections;
 
 namespace MovieStore.Models
 {
@@ -42,7 +43,7 @@ namespace MovieStore.Models
         public string[] IdsToDelete { get; set; }
     }
 
-    public class MovieModel
+    public class MovieModel : IEnumerable<MovieModel>
     {
         public int MovieID { get; set; }
         public string Title { get; set; }
@@ -52,6 +53,16 @@ namespace MovieStore.Models
         public string Cast { get; set; }
         public string Desc { get; set; }
         public decimal Price { get; set; }
+
+        public IEnumerator<MovieModel> GetEnumerator()
+        {
+            yield return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
     }
 
     public class Cast

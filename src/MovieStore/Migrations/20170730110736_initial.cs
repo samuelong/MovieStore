@@ -66,17 +66,19 @@ namespace MovieStore.Migrations
                 name: "Movies",
                 columns: table => new
                 {
-                    Title = table.Column<string>(nullable: false),
+                    MovieID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Cast = table.Column<string>(nullable: true),
                     DateReleased = table.Column<DateTime>(nullable: false),
                     Desc = table.Column<string>(nullable: true),
                     Director = table.Column<string>(nullable: true),
                     Duration = table.Column<int>(nullable: false),
-                    Price = table.Column<decimal>(nullable: false)
+                    Price = table.Column<decimal>(nullable: false),
+                    Title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Movies", x => x.Title);
+                    table.PrimaryKey("PK_Movies", x => x.MovieID);
                 });
 
             migrationBuilder.CreateTable(
@@ -216,10 +218,11 @@ namespace MovieStore.Migrations
                 name: "Rentals",
                 columns: table => new
                 {
-                    RentalID = table.Column<int>(nullable: false),
+                    RentalID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Cost = table.Column<decimal>(nullable: false),
                     EndRentalDate = table.Column<DateTime>(nullable: false),
-                    MovieTitle = table.Column<string>(nullable: false),
+                    MovieID = table.Column<int>(nullable: false),
                     PaymentId = table.Column<int>(nullable: false),
                     StartRentalDate = table.Column<DateTime>(nullable: false)
                 },
@@ -227,10 +230,10 @@ namespace MovieStore.Migrations
                 {
                     table.PrimaryKey("PK_Rentals", x => x.RentalID);
                     table.ForeignKey(
-                        name: "FK_Rentals_Movies_MovieTitle",
-                        column: x => x.MovieTitle,
+                        name: "FK_Rentals_Movies_MovieID",
+                        column: x => x.MovieID,
                         principalTable: "Movies",
-                        principalColumn: "Title",
+                        principalColumn: "MovieID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Rentals_Payments_RentalID",
@@ -297,9 +300,9 @@ namespace MovieStore.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rentals_MovieTitle",
+                name: "IX_Rentals_MovieID",
                 table: "Rentals",
-                column: "MovieTitle");
+                column: "MovieID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rentals_RentalID",

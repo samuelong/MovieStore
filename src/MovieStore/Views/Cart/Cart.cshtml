@@ -5,34 +5,31 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-12">
-            <table class="table table-bordered table-condensed table-hover table-responsive">
-                @ViewBag.Error
+            <div class="text-danger" asp-validation-summary="All"></div>
+            <form asp-action="GoToPayment" method="post">
+                <table class="table table-bordered table-condensed table-hover table-responsive">
                     <tr>
                         <th class="col-xs-6">Movie Name</th>
                         <th class="col-xs-2">Movie Price</th>
                         <th colspan="2" class="col-xs-4">Duration of Rental</th>
                     </tr>
-                @foreach (var m in Model.Rentals)
-                {
-                    <tr>
-                        <td>@m.Movie.Title</td>
-                        <td>@m.Cost</td>
-                        <td>@m.StartRentalDate</td>
-                        <td>@m.EndRentalDate</td>
-                    </tr>
-                }
-            </table>
-        </div>
-    </div>
-    @if (ViewBag.Error == null)
-    {
-    <div class="row">
-        <div class="col-xs-3">
-            <form enctype="application/x-www-form-urlencoded" action="/Cart/GoToPayment" method="post" >
+                    @for (int i = 0; i < Model.Rentals.Count(); i++)
+                    {
+                        @Html.HiddenFor(m => m.Rentals[i].MovieID)
+                        @Html.HiddenFor(m => m.Rentals[i].RentalID)
+                        @Html.HiddenFor(m => m.Rentals[i].EndRentalDate)
+                        @Html.HiddenFor(m => m.Rentals[i].StartRentalDate)
+                        @Html.HiddenFor(m => m.Rentals[i].Cost)
+                        <tr>
+                            <td>@Model.Rentals[i].MovieTitle</td>
+                            <td>@Model.Rentals[i].Cost</td>
+                            <td>@Model.Rentals[i].StartRentalDate</td>
+                            <td>@Model.Rentals[i].EndRentalDate</td>
+                        </tr>
+                    }
+                </table>
                 <input type="submit" class="btn-success" value="Purchase" />
-                @Html.HiddenFor(m => m.Rentals)
             </form>
         </div>
     </div>
-    }
 </div>

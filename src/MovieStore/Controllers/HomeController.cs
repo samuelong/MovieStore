@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using MovieStore.Models;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,6 +14,11 @@ namespace MovieStore.Controllers
     [Authorize(Roles = "Users")]
     public class HomeController : Controller
     {
+        AppIdentityDbContext db;
+        public HomeController(AppIdentityDbContext context)
+        {
+            db = context;
+        }
         // GET: /<controller>/
         public IActionResult GoToHomePage()
         {
@@ -21,8 +27,12 @@ namespace MovieStore.Controllers
 
         public IActionResult ViewMovies()
         {
-            return View("Movie");
+            List<Movie> movies;
+            movies = db.Movies.ToList();
+            return View("Movie", movies);
         }
+
+
 
         public ActionResult GoToPayment()
         {

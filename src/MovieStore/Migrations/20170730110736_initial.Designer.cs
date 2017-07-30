@@ -8,7 +8,7 @@ using MovieStore.Models;
 namespace MovieStore.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20170730075619_initial")]
+    [Migration("20170730110736_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -194,7 +194,8 @@ namespace MovieStore.Migrations
 
             modelBuilder.Entity("MovieStore.Models.Movie", b =>
                 {
-                    b.Property<string>("Title");
+                    b.Property<int>("MovieID")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Cast");
 
@@ -208,7 +209,9 @@ namespace MovieStore.Migrations
 
                     b.Property<decimal>("Price");
 
-                    b.HasKey("Title");
+                    b.Property<string>("Title");
+
+                    b.HasKey("MovieID");
 
                     b.ToTable("Movies");
                 });
@@ -234,14 +237,14 @@ namespace MovieStore.Migrations
 
             modelBuilder.Entity("MovieStore.Models.Rental", b =>
                 {
-                    b.Property<int>("RentalID");
+                    b.Property<int>("RentalID")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<decimal>("Cost");
 
                     b.Property<DateTime>("EndRentalDate");
 
-                    b.Property<string>("MovieTitle")
-                        .IsRequired();
+                    b.Property<int>("MovieID");
 
                     b.Property<int>("PaymentId");
 
@@ -249,7 +252,7 @@ namespace MovieStore.Migrations
 
                     b.HasKey("RentalID");
 
-                    b.HasIndex("MovieTitle");
+                    b.HasIndex("MovieID");
 
                     b.HasIndex("RentalID");
 
@@ -315,7 +318,7 @@ namespace MovieStore.Migrations
                 {
                     b.HasOne("MovieStore.Models.Movie", "Movie")
                         .WithMany()
-                        .HasForeignKey("MovieTitle");
+                        .HasForeignKey("MovieID");
 
                     b.HasOne("MovieStore.Models.Payment", "Payment")
                         .WithMany("Rentals")
