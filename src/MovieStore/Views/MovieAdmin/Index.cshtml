@@ -23,11 +23,13 @@
                 <td>@movie.Desc</td>
                 <td>@movie.Price</td>
                 <td>
-                    <form asp-action="Delete" asp-route-id="@movie.MovieID" method="post">
-                        <input type="hidden" name="movieId" />
-                        <a class="btn btn-sm btn-primary" asp-action="Edit"
-                           asp-route-id="@movie.MovieID">Edit</a>
-                        <button type="submit" class="btn btn-sm btn-danger">
+                    <form asp-action="Delete" method="post">
+                        <a asp-action="Edit" class="btn btn-sm btn-warning"
+                           asp-route-movieId="@movie.MovieID">
+                            Edit
+                        </a>
+                        <input type="hidden" name="MovieID" value="@movie.MovieID" />
+                        <button type="submit" class="btn btn-danger btn-sm">
                             Delete
                         </button>
                     </form>
