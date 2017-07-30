@@ -1,4 +1,5 @@
 ﻿@{ Layout = "_LayoutUsers";}
+@model MovieModel
 
 <div class="container" style="background-color:lightgrey">
     <form action="" method="">
@@ -14,12 +15,33 @@
                new SelectListItem() { Text = "Name", Value = "Name" },
                new SelectListItem() { Text = "Genre", Value = "Genre" }
                 })
-                <button class="btn btn-success" type="button">Search</button>
+                <button class="btn btn-success" type="submit">Search</button>
             </div>
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <!-- Movie area. Your code here.-->
+                <table class="table table-responsive table-bordered">
+                    <tr>
+                        <th>Title</th>
+                        <th>DateReleased</th>
+                        <th>Cast</th>
+                        <th>Director</th>
+                        <th>Duration</th>
+                        <th>Desc</th>
+                    </tr>
+                    @foreach(var m in Model)
+                    {
+                        <tr>
+                            <td>@m.Title</td>
+                            <td>@m.DateReleased</td>
+                            <td>@m.Cast</td>
+                            <td>@m.Director</td>
+                            <td>@m.Duration</td>
+                            <td>@m.Desc</td>
+                            <td><input type="button" value="Add to Cart" class="btn-primary" /></td>
+                        </tr>
+                    }
+                </table>
             </div>
         </div>
     </form>

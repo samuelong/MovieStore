@@ -19,9 +19,11 @@ namespace MovieStore.Controllers
     public class CartController : Controller
     {
         AppIdentityDbContext db;
-        public CartController(AppIdentityDbContext context)
+        UserManager<AppUser> userManager;
+        public CartController(AppIdentityDbContext context, UserManager<AppUser> userMngr)
         {
             db = context;
+            userManager = userMngr;
         }
         // GET: /<controller>/
 
@@ -30,15 +32,16 @@ namespace MovieStore.Controllers
             TempData["Movies"] = db.Movies.ToList();
             if (TempData["Movies"] is List<Movie>)
             {
-                List<Rental> rentals = new List<Rental>();
+                List<RentalModel> rentals = new List<RentalModel>();
                 foreach (Movie m in (List<Movie>)TempData["Movies"])
                 {
-                    rentals.Add(new Rental()
+                    rentals.Add(new RentalModel()
                     {
-                        Movie = m,
+                        MovieTitle = m.Title,
                         StartRentalDate = DateTime.Now,
                         EndRentalDate = DateTime.Now.AddDays(7),
-                        Cost = m.Price*7
+                        Cost = m.Price*7,
+                        MovieID = m.MovieID,
                     });
                 }
                 CartModel model = new CartModel()
@@ -53,20 +56,28 @@ namespace MovieStore.Controllers
             }
         }
 
-        public RedirectToActionResult GoToPayment(CartModel model)
+        public async Task<RedirectToActionResult> GoToPayment(CartModel model)
         {
-            PaymentModel Paymentmodel = new PaymentModel()
+            if (ModelState.IsValid)
             {
-                Rentals = model.Rentals,
-                AmountPaid = model.Rentals.Sum(s => s.Cost * (s.EndRentalDate - s.StartRentalDate).Days)
-                // User
-            };
-            return RedirectToAction("ViewPayment", Paymentmodel);
+                PaymentModel Paymentmodel = new PaymentModel()
+                {
+                    Rentals = model.Rentals,
+                    AmountPaid = model.Rentals.Sum(s => s.Cost * (s.EndRentalDate - s.StartRentalDate).Days),
+                    User = await userManager.FindByNameAsync(User.Identity.Name)
+                };
+                return RedirectToAction("ViewPayment", Paymentmodel);
+            }
+            ModelState.AddModelError(string.Empty, "Movies provided incorrect");
+            return RedirectToAction("ViewCart", model);
         }
 
         public ActionResult ViewPayment(PaymentModel model)
         {
-            return View(model);
+            if (ModelState.IsValid)
+                return View("Payment", model);
+            ModelState.AddModelError(string.Empty, "Movies2 provided incorrect");
+            return RedirectToAction("ViewCart");
         }
 
         [HttpPost]

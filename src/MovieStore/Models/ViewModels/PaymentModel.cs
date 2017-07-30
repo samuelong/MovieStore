@@ -14,7 +14,7 @@ namespace MovieStore.Models.ViewModels
 
         public decimal AmountPaid { get; set; }
 
-        public ICollection<Rental> Rentals { get; set; }
+        public List<RentalModel> Rentals { get; set; }
 
         public IEnumerator<PaymentModel> GetEnumerator()
         {

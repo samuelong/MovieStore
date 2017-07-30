@@ -5,21 +5,22 @@
     <div class="row">
         <div class="col-xs-12">
             <form action="/Cart/CreatePayment" method="post">
-                @ViewBag["Message"]
+                @ViewBag.Message
                 <table class="table-responsive table table-striped">
                     <tr>
                         <td colspan="2">The total cost is @ViewBag.TotalCost.</td>
                         <td><input type="submit" value="Purchase" /></td>
                     </tr>
-                    @foreach(var Rentals in Model.Rentals)
+                    @for(int i = 0; i < Model.Rentals.Count; i++)
                     {
                         <tr>
-                            <td>@Rentals.Movie.Title</td>
-                            <td>@Rentals.Movie.Price per day, over a period of 7 days.</td>
+                            <td>@Model.Rentals[i].MovieTitle</td>
+                            <td>@(Model.Rentals[i].Cost/7) per day, over a period of 7 days.</td>
                             <td></td>
                         </tr>
                     }
                 </table>
+                <div class="text-danger" asp-validation-summary="All"></div>
             </form>
         </div>
     </div>
