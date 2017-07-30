@@ -20,6 +20,7 @@
                         @Html.HiddenFor(m => m.Rentals[i].EndRentalDate)
                         @Html.HiddenFor(m => m.Rentals[i].StartRentalDate)
                         @Html.HiddenFor(m => m.Rentals[i].Cost)
+                        @Html.HiddenFor(m => m.Rentals[i].MovieTitle)
                         <tr>
                             <td>@Model.Rentals[i].MovieTitle</td>
                             <td>@Model.Rentals[i].Cost</td>
@@ -28,7 +29,7 @@
                         </tr>
                     }
                 </table>
-                <input type="submit" class="btn-success" value="Purchase" />
+                <input type="submit" class="btn-success" value="Rent" />
             </form>
         </div>
     </div>
