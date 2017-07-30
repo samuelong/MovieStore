@@ -11,6 +11,7 @@ namespace MovieStore.Models
     public class AppUser: IdentityUser
     {
         //C.30 application-specific user data
-
+        public virtual ICollection<Payment> Payments { get; set; }
+        public virtual ICollection<AppUserMovies> Movies { get; set; }
     }
 }

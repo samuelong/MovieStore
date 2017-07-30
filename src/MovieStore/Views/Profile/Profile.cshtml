@@ -24,13 +24,13 @@
                     <th class="col-xs-2">Rental Extension</th>
                     <th class="col-xs-4">Extension Price</th>
                 </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <input type="text" asp-for=""
-                        <input type="hidden" asp-for="" class="form-control" />
-                    </td>
-                </tr>
+                @foreach (var m in Model)
+                {
+                    <tr>
+                        <td>@Model.Rentals</td>
+
+                    </tr>
+                }
             </table>
         </form>
     </div>

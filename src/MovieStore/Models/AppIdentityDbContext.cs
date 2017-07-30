@@ -48,5 +48,50 @@ namespace MovieStore.Models
         public DbSet<Rental> Rentals { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<AppUserMovies> UserMovies { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            /*
+            // User to Payment - 1 to M relation
+            modelBuilder.Entity<AppUser>()
+                .HasMany<Payment>()
+                .WithOne()
+                .IsRequired(true)
+                .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Cascade);
+                */
+            // Payment to User - M to 1 Relation
+            modelBuilder.Entity<Payment>()
+                .HasOne<AppUser>(p => p.User)
+                .WithMany(u => u.Payments)
+                .IsRequired(true)
+                .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Restrict)
+                .HasForeignKey(p => p.UserId);
+
+            // Payment to Rental - 1 to Many Relation
+            modelBuilder.Entity<Rental>()
+                .HasOne<Payment>(r => r.Payment)
+                .WithMany(p => p.Rentals)
+                .IsRequired(true)
+                .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Restrict)
+                .HasForeignKey(r => r.RentalID);
+
+            // Rental to Movie - 1 to 1 Relation
+            modelBuilder.Entity<Rental>()
+                .HasOne<Movie>(r => r.Movie)
+                .WithMany()
+                .IsRequired(true)
+                .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Restrict)
+                .HasForeignKey(r => r.MovieTitle);
+
+            // User to UserMovies - 1 to 1 Relation
+            modelBuilder.Entity<AppUserMovies>()
+                .HasOne<AppUser>(u => u.User)
+                .WithMany()
+                .IsRequired(true)
+                .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Restrict)
+                .HasForeignKey(m => m.UserId);
+        }
     }
 }

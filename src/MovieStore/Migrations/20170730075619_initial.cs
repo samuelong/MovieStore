@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace MovieStore.Migrations
 {
-    public partial class MovieStore : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -166,6 +166,32 @@ namespace MovieStore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserMovies",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    AppUserId = table.Column<string>(nullable: true),
+                    EndDate = table.Column<DateTime>(nullable: false),
+                    StartDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserMovies", x => x.UserId);
+                    table.ForeignKey(
+                        name: "FK_UserMovies_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserMovies_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Payments",
                 columns: table => new
                 {
@@ -173,14 +199,14 @@ namespace MovieStore.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AmountPaid = table.Column<decimal>(nullable: false),
                     DateofTransaction = table.Column<DateTime>(nullable: false),
-                    Id = table.Column<string>(nullable: true)
+                    UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Payments", x => x.PaymentID);
                     table.ForeignKey(
-                        name: "FK_Payments_AspNetUsers_Id",
-                        column: x => x.Id,
+                        name: "FK_Payments_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -190,22 +216,27 @@ namespace MovieStore.Migrations
                 name: "Rentals",
                 columns: table => new
                 {
-                    RentalID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    RentalID = table.Column<int>(nullable: false),
                     Cost = table.Column<decimal>(nullable: false),
                     EndRentalDate = table.Column<DateTime>(nullable: false),
-                    Id = table.Column<string>(nullable: true),
-                    MovieID = table.Column<int>(nullable: false),
+                    MovieTitle = table.Column<string>(nullable: false),
+                    PaymentId = table.Column<int>(nullable: false),
                     StartRentalDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Rentals", x => x.RentalID);
                     table.ForeignKey(
-                        name: "FK_Rentals_AspNetUsers_Id",
-                        column: x => x.Id,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        name: "FK_Rentals_Movies_MovieTitle",
+                        column: x => x.MovieTitle,
+                        principalTable: "Movies",
+                        principalColumn: "Title",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Rentals_Payments_RentalID",
+                        column: x => x.RentalID,
+                        principalTable: "Payments",
+                        principalColumn: "PaymentID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -251,9 +282,29 @@ namespace MovieStore.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rentals_Id",
+                name: "IX_UserMovies_AppUserId",
+                table: "UserMovies",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserMovies_UserId",
+                table: "UserMovies",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payments_UserId",
+                table: "Payments",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rentals_MovieTitle",
                 table: "Rentals",
-                column: "Title");
+                column: "MovieTitle");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rentals_RentalID",
+                table: "Rentals",
+                column: "RentalID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -274,22 +325,22 @@ namespace MovieStore.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "UserMovies");
+
+            migrationBuilder.DropTable(
+                name: "Rentals");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
                 name: "Movies");
 
             migrationBuilder.DropTable(
                 name: "Payments");
-
-            migrationBuilder.DropTable(
-                name: "Payments");
-
-            migrationBuilder.DropTable(
-                name: "Movies");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Movies");
         }
     }
 }

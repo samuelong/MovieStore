@@ -172,6 +172,25 @@ namespace MovieStore.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("MovieStore.Models.AppUserMovies", b =>
+                {
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("AppUserId");
+
+                    b.Property<DateTime>("EndDate");
+
+                    b.Property<DateTime>("StartDate");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserMovies");
+                });
+
             modelBuilder.Entity("MovieStore.Models.Movie", b =>
                 {
                     b.Property<string>("Title");
@@ -202,35 +221,36 @@ namespace MovieStore.Migrations
 
                     b.Property<DateTime>("DateofTransaction");
 
-                    b.Property<string>("Id");
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.HasKey("PaymentID");
 
-                    b.HasIndex("Id");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("MovieStore.Models.Rental", b =>
                 {
-                    b.Property<int>("RentalID")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("RentalID");
 
                     b.Property<decimal>("Cost");
 
                     b.Property<DateTime>("EndRentalDate");
 
-                    b.Property<int?>("PaymentID");
+                    b.Property<string>("MovieTitle")
+                        .IsRequired();
+
+                    b.Property<int>("PaymentId");
 
                     b.Property<DateTime>("StartRentalDate");
 
-                    b.Property<string>("Title");
-
                     b.HasKey("RentalID");
 
-                    b.HasIndex("PaymentID");
+                    b.HasIndex("MovieTitle");
 
-                    b.HasIndex("Title");
+                    b.HasIndex("RentalID");
 
                     b.ToTable("Rentals");
                 });
@@ -272,22 +292,33 @@ namespace MovieStore.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("MovieStore.Models.AppUserMovies", b =>
+                {
+                    b.HasOne("MovieStore.Models.AppUser")
+                        .WithMany("Movies")
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("MovieStore.Models.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("MovieStore.Models.Payment", b =>
                 {
                     b.HasOne("MovieStore.Models.AppUser", "User")
-                        .WithMany()
-                        .HasForeignKey("Id");
+                        .WithMany("Payments")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("MovieStore.Models.Rental", b =>
                 {
-                    b.HasOne("MovieStore.Models.Payment", "Payment")
-                        .WithMany("Rentals")
-                        .HasForeignKey("PaymentID");
-
                     b.HasOne("MovieStore.Models.Movie", "Movie")
                         .WithMany()
-                        .HasForeignKey("Title");
+                        .HasForeignKey("MovieTitle");
+
+                    b.HasOne("MovieStore.Models.Payment", "Payment")
+                        .WithMany("Rentals")
+                        .HasForeignKey("RentalID");
                 });
         }
     }

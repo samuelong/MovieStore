@@ -9,17 +9,11 @@ namespace MovieStore.Models
 {
     public class AppUserMovies
     {
-        [Key]
-        [Column(Order = 0)]
-        [ForeignKey("MovieId")]
-        public virtual Movie Movie { get; set; }
-
-        [Key]
-        [Column(Order = 1)]
-        [ForeignKey("UserId")]
-        public virtual AppUser User { get; set; }
-
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        [Key]
+        public string UserId { get; set; }
+
+        public virtual AppUser User { get; set; }
     }
 }

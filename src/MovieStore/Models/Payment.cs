@@ -11,21 +11,16 @@ namespace MovieStore.Models
     public class Payment
     {
         public Payment() { }
-
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PaymentID { get; set; }
 
-        //[Required]
-        [ForeignKey("Id")]
-        public virtual AppUser User { get; set; }
-
-        //[Required]
         public DateTime DateofTransaction { get; set; }
 
-        //[Required]
         public decimal AmountPaid { get; set; }
 
+
+        public string UserId { get; set; }
+        public virtual AppUser User { get; set; }
         public virtual ICollection<Rental> Rentals { get; set; }
     }
 }

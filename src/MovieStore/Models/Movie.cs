@@ -9,8 +9,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MovieStore.Models
 {
-    [Authorize]
-    public class Movie : IEnumerable<Movie>
+    public class Movie
     {
         [Key]
         public string Title { get; set; }
@@ -32,16 +31,6 @@ namespace MovieStore.Models
             Cast = cast;
             Desc = desc;
             Price = price;
-        }
-
-        public IEnumerator<Movie> GetEnumerator()
-        {
-            yield return this;
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
         }
     }
 }
