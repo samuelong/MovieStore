@@ -9,6 +9,6 @@ namespace MovieStore.Models
     {
         IEnumerable<Movie> Movies { get; }
         void SaveMovie(Movie movie);
-        Movie DeleteMovie(string title);
+        Movie DeleteMovie(int movieID);
     }
 }

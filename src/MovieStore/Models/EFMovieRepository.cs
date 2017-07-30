@@ -18,14 +18,14 @@ namespace MovieStore.Models
 
         public void SaveMovie(Movie movie)
         {
-            if (movie.Title == "")
+            if (movie.MovieID == 0)
             {
                 context.Movies.Add(movie);
             }
             else
             {
                 Movie dbEntry = context.Movies
-                    .FirstOrDefault(m => m.Title == movie.Title);
+                    .FirstOrDefault(m => m.MovieID == movie.MovieID);
                 if (dbEntry != null)
                 {
                     dbEntry.Title = movie.Title;
@@ -40,10 +40,10 @@ namespace MovieStore.Models
             context.SaveChanges();
         }
 
-        public Movie DeleteMovie(string title)
+        public Movie DeleteMovie(int movieID)
         {
             Movie dbEntry = context.Movies
-                .FirstOrDefault(m => m.Title == title);
+                .FirstOrDefault(m => m.MovieID == movieID);
             if (dbEntry != null)
             {
                 context.Movies.Remove(dbEntry);

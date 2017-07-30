@@ -70,9 +70,9 @@ namespace MovieStore.Controllers
         public ViewResult Create() => View("Edit", new Movie());
 
         [HttpPost]
-        public IActionResult Delete(string title)
+        public IActionResult Delete(int movieID)
         {
-            Movie deletedMovie = repository.DeleteMovie(title);
+            Movie deletedMovie = repository.DeleteMovie(movieID);
             if (deletedMovie != null)
             {
                 TempData["message"] = $"{deletedMovie.Title} was deleted";
