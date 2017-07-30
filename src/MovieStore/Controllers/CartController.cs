@@ -27,6 +27,7 @@ namespace MovieStore.Controllers
 
         public IActionResult ViewCart()
         {
+            TempData["Movies"] = db.Movies.ToList();
             if (TempData["Movies"] is List<Movie>)
             {
                 List<Rental> rentals = new List<Rental>();
@@ -36,7 +37,8 @@ namespace MovieStore.Controllers
                     {
                         Movie = m,
                         StartRentalDate = DateTime.Now,
-                        EndRentalDate = DateTime.Now.AddDays(7)
+                        EndRentalDate = DateTime.Now.AddDays(7),
+                        Cost = m.Price*7
                     });
                 }
                 CartModel model = new CartModel()
@@ -47,7 +49,6 @@ namespace MovieStore.Controllers
             }
             else
             {
-                ViewBag.Error = "No Movies Found.";
                 return View("Cart");
             }
         }
@@ -60,7 +61,12 @@ namespace MovieStore.Controllers
                 AmountPaid = model.Rentals.Sum(s => s.Cost * (s.EndRentalDate - s.StartRentalDate).Days)
                 // User
             };
-            return RedirectToAction("CreatePayment", Paymentmodel);
+            return RedirectToAction("ViewPayment", Paymentmodel);
+        }
+
+        public ActionResult ViewPayment(PaymentModel model)
+        {
+            return View(model);
         }
 
         [HttpPost]

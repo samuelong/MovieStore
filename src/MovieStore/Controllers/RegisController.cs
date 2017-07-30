@@ -33,6 +33,7 @@ namespace Users.Controllers
                 = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await userManager.AddToRoleAsync(user, "Users");
                     return RedirectToAction("Index");
                 }
                 else

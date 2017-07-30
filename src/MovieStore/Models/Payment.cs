@@ -12,6 +12,7 @@ namespace MovieStore.Models
     {
         public Payment() { }
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PaymentID { get; set; }
 
         public DateTime DateofTransaction { get; set; }

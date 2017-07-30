@@ -7,16 +7,16 @@
         <div class="col-xs-12">
             <table class="table table-bordered table-condensed table-hover table-responsive">
                 @ViewBag.Error
-                @foreach (var m in Model.Rentals)
-                {
                     <tr>
                         <th class="col-xs-6">Movie Name</th>
                         <th class="col-xs-2">Movie Price</th>
-                        <th class="col-xs-4">Duration of Rental</th>
+                        <th colspan="2" class="col-xs-4">Duration of Rental</th>
                     </tr>
+                @foreach (var m in Model.Rentals)
+                {
                     <tr>
                         <td>@m.Movie.Title</td>
-                        <td>@{m.Cost.ToString("C2", CultureInfo.CurrentCulture)}</td>
+                        <td>@m.Cost</td>
                         <td>@m.StartRentalDate</td>
                         <td>@m.EndRentalDate</td>
                     </tr>

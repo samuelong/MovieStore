@@ -28,6 +28,7 @@ namespace MovieStore.Models
                 if (await roleManager.FindByNameAsync(role) == null)
                 {
                     await roleManager.CreateAsync(new IdentityRole(role));
+                    await roleManager.CreateAsync(new IdentityRole("Users"));
                 }
 
                 AppUser user = new AppUser

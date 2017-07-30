@@ -11,6 +11,7 @@ namespace MovieStore.Models
     public class Rental
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RentalID { get; set; }
 
         public DateTime StartRentalDate { get; set; }
