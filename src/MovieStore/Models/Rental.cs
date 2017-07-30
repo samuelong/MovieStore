@@ -19,7 +19,7 @@ namespace MovieStore.Models
         public decimal Cost { get; set; }
 
         public int PaymentId { get; set; }
-        public int MovieID { get; set; }
+        public string Title { get; set; }
 
         public virtual Payment Payment { get; set; }
         public virtual Movie Movie { get; set; }
