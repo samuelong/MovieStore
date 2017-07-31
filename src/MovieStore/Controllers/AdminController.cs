@@ -148,6 +148,6 @@ namespace MovieStore.Controllers
             }
         }
 
-        public ViewResult HomePage() => View("HomePage");
+        public ActionResult HomePage() => View("HomePage");
     }
 }

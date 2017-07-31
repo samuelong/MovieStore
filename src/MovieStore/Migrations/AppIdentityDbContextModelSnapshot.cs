@@ -193,7 +193,8 @@ namespace MovieStore.Migrations
 
             modelBuilder.Entity("MovieStore.Models.Movie", b =>
                 {
-                    b.Property<string>("Title");
+                    b.Property<int>("MovieID")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Cast");
 
@@ -205,12 +206,11 @@ namespace MovieStore.Migrations
 
                     b.Property<int>("Duration");
 
-                    b.Property<int>("MovieID")
-                        .ValueGeneratedOnAdd();
-
                     b.Property<decimal>("Price");
 
-                    b.HasKey("Title");
+                    b.Property<string>("Title");
+
+                    b.HasKey("MovieID");
 
                     b.ToTable("Movies");
                 });
@@ -243,18 +243,17 @@ namespace MovieStore.Migrations
 
                     b.Property<DateTime>("EndRentalDate");
 
+                    b.Property<int>("MovieId");
+
                     b.Property<int>("PaymentId");
 
                     b.Property<DateTime>("StartRentalDate");
 
-                    b.Property<string>("Title")
-                        .IsRequired();
-
                     b.HasKey("RentalID");
 
-                    b.HasIndex("RentalID");
+                    b.HasIndex("MovieId");
 
-                    b.HasIndex("Title");
+                    b.HasIndex("PaymentId");
 
                     b.ToTable("Rentals");
                 });
@@ -304,25 +303,29 @@ namespace MovieStore.Migrations
 
                     b.HasOne("MovieStore.Models.AppUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MovieStore.Models.Payment", b =>
                 {
                     b.HasOne("MovieStore.Models.AppUser", "User")
                         .WithMany("Payments")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MovieStore.Models.Rental", b =>
                 {
-                    b.HasOne("MovieStore.Models.Payment", "Payment")
-                        .WithMany("Rentals")
-                        .HasForeignKey("RentalID");
-
                     b.HasOne("MovieStore.Models.Movie", "Movie")
                         .WithMany()
-                        .HasForeignKey("Title");
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MovieStore.Models.Payment", "Payment")
+                        .WithMany("Rentals")
+                        .HasForeignKey("PaymentId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }

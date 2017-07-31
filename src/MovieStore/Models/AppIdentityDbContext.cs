@@ -67,7 +67,7 @@ namespace MovieStore.Models
                 .HasOne<AppUser>(p => p.User)
                 .WithMany(u => u.Payments)
                 .IsRequired(true)
-                .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Restrict)
+                .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Cascade)
                 .HasForeignKey(p => p.UserId);
 
             // Payment to Rental - 1 to Many Relation
@@ -75,15 +75,15 @@ namespace MovieStore.Models
                 .HasOne<Payment>(r => r.Payment)
                 .WithMany(p => p.Rentals)
                 .IsRequired(true)
-                .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Restrict)
-                .HasForeignKey(r => r.RentalID);
+                .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Cascade)
+                .HasForeignKey(r => r.PaymentId);
 
             // Rental to Movie - 1 to 1 Relation
             modelBuilder.Entity<Rental>()
                 .HasOne<Movie>(r => r.Movie)
                 .WithMany()
                 .IsRequired(true)
-                .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Restrict)
+                .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Cascade)
                 .HasForeignKey(r => r.MovieId);
 
             // User to UserMovies - 1 to 1 Relation
@@ -91,7 +91,7 @@ namespace MovieStore.Models
                 .HasOne<AppUser>(u => u.User)
                 .WithMany()
                 .IsRequired(true)
-                .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Restrict)
+                .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Cascade)
                 .HasForeignKey(m => m.UserId);
         }
     }

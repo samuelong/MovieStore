@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace MovieStore.Controllers
 {
-    [Authorize(Roles = "Admins")]
     public class AccountController : Controller
     {
         private UserManager<AppUser> userManager;
@@ -47,9 +46,9 @@ namespace MovieStore.Controllers
                     {
                         if (User.IsInRole("Admins"))
                             // Admin Homepage Redirect
-                            return Redirect("/Admin/HomePage");
-                        else
-                            return Redirect("/Home/GoToHomePage");
+                            return RedirectToAction("HomePage", "Admin");
+                        else if (User.IsInRole("Users"))
+                            return RedirectToAction("GoToHomePage", "Home");
                     }
                 }
                 ModelState.AddModelError(nameof(LoginModel.Email), "Invalid user or password");
@@ -57,11 +56,12 @@ namespace MovieStore.Controllers
             return View(details);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admins")]
+        [Authorize(Roles = "Users")]
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         [AllowAnonymous]

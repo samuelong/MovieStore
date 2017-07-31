@@ -56,7 +56,7 @@ namespace MovieStore.Controllers
             }
         }
 
-        public async Task<RedirectToActionResult> GoToPayment(CartModel model)
+        public ActionResult GoToPayment(CartModel model)
         {
             if (ModelState.IsValid)
             {
@@ -64,52 +64,59 @@ namespace MovieStore.Controllers
                 {
                     Rentals = model.Rentals,
                     AmountPaid = model.Rentals.Sum(s => s.Cost * (s.EndRentalDate - s.StartRentalDate).Days),
-                    User = await userManager.FindByNameAsync(User.Identity.Name)
                 };
-                return RedirectToAction("ViewPayment", Paymentmodel);
+                return View("Payment", Paymentmodel);
             }
             ModelState.AddModelError(string.Empty, "Movies provided incorrect");
             return RedirectToAction("ViewCart", model);
         }
 
-        public ActionResult ViewPayment(PaymentModel model)
-        {
-            if (ModelState.IsValid)
-                return View("Payment", model);
-            ModelState.AddModelError(string.Empty, "Movies2 provided incorrect");
-            return RedirectToAction("ViewCart");
-        }
-
         [HttpPost]
-        public ActionResult CreatePayment(PaymentModel model)
+        public async Task<ActionResult> CreatePayment(PaymentModel model)
         {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
             if (ModelState.IsValid)
             {
                 Payment p = new Payment()
                 {
                     DateofTransaction = DateTime.Now,
                     AmountPaid = model.AmountPaid,
-                    User = model.User
+                    User = await userManager.FindByNameAsync(User.Identity.Name)
                 };
-                db.Payments.Add(
-                    p
-                );
-                foreach (Rental rental in p.Rentals)
+                List<Rental> rentals = new List<Rental>();
+                for(int i = 0; i < model.Rentals.Count; i++ )
+                {
+                    rentals.Add(
+                        new Rental()
+                        {
+                            MovieId = model.Rentals[i].MovieID,
+                            Payment = p,
+                            Cost = model.Rentals[i].Cost,
+                            StartRentalDate = model.Rentals[i].StartRentalDate,
+                            EndRentalDate = model.Rentals[i].EndRentalDate
+                        }
+                        );
+                }
+                foreach (Rental rental in rentals)
                 {
                     db.Rentals.Add(new Rental()
                     {
-                        Movie = rental.Movie,
+                        MovieId = rental.MovieId,
                         Payment = p,
                         StartRentalDate = rental.StartRentalDate,
-                        EndRentalDate = rental.EndRentalDate
+                        EndRentalDate = rental.EndRentalDate,
+                        Cost = rental.Cost
                     }
                     );
                 }
                 db.SaveChanges();
             }
             else
+            {
                 TempData["Error"] = "Payment Failed";
-            return View("Payment");
+                return View("Payment", model);
+            }
+            return RedirectToAction("ViewCart");
         }
     }
 

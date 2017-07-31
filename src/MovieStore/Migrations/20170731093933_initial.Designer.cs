@@ -8,7 +8,7 @@ using MovieStore.Models;
 namespace MovieStore.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20170730110736_initial")]
+    [Migration("20170731093933_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -244,7 +244,7 @@ namespace MovieStore.Migrations
 
                     b.Property<DateTime>("EndRentalDate");
 
-                    b.Property<int>("MovieID");
+                    b.Property<int>("MovieId");
 
                     b.Property<int>("PaymentId");
 
@@ -252,9 +252,9 @@ namespace MovieStore.Migrations
 
                     b.HasKey("RentalID");
 
-                    b.HasIndex("MovieID");
+                    b.HasIndex("MovieId");
 
-                    b.HasIndex("RentalID");
+                    b.HasIndex("PaymentId");
 
                     b.ToTable("Rentals");
                 });
@@ -304,25 +304,29 @@ namespace MovieStore.Migrations
 
                     b.HasOne("MovieStore.Models.AppUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MovieStore.Models.Payment", b =>
                 {
                     b.HasOne("MovieStore.Models.AppUser", "User")
                         .WithMany("Payments")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MovieStore.Models.Rental", b =>
                 {
                     b.HasOne("MovieStore.Models.Movie", "Movie")
                         .WithMany()
-                        .HasForeignKey("MovieID");
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MovieStore.Models.Payment", "Payment")
                         .WithMany("Rentals")
-                        .HasForeignKey("RentalID");
+                        .HasForeignKey("PaymentId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }

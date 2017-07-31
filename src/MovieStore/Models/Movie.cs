@@ -12,8 +12,8 @@ namespace MovieStore.Models
     public class Movie
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int MovieID { get; set; }
         [Key]
+        public int MovieID { get; set; }
         public string Title { get; set; }
         public DateTime DateReleased { get; set; }
         public int Duration { get; set; }

@@ -28,11 +28,13 @@
                     <li><a href="/MovieAdmin/Index">Movie Admin</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    @if (User?.Identity?.IsAuthenticated ?? false)
-                    {
-                        <a asp-controller="Account" asp-action="Logout"
-                           class="btn btn-danger">Logout</a>
-                    }
+                    <li>
+                        @if (User?.Identity?.IsAuthenticated ?? false)
+                        {
+                            <a asp-controller="Account" asp-action="Logout"
+                               class="btn btn-danger">Logout</a>
+                        }
+                    </li>
                 </ul>
             </div>
         </div>

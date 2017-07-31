@@ -2,47 +2,47 @@
 @model MovieModel
 
 <div class="container" style="background-color:lightgrey">
-    <form action="" method="">
-        <div class="row">
-            <div class="col-xs-6">
-                <label style="font-size:x-large">-Search for your movies-</label>
-            </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <label style="font-size:x-large">-Search for your movies-</label>
         </div>
-        <div class="row">
-            <div class="col-xs-6">
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <form asp-action="" method="post">
                 @Html.TextBox("txtSearch")
                 @Html.DropDownList("ddlFilter", new SelectListItem[]{
-               new SelectListItem() { Text = "Name", Value = "Name" },
-               new SelectListItem() { Text = "Genre", Value = "Genre" }
+                new SelectListItem() { Text = "Name", Value = "Name" },
+                new SelectListItem() { Text = "Genre", Value = "Genre" }
                 })
                 <button class="btn btn-success" type="submit">Search</button>
-            </div>
+            </form>
         </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <table class="table table-responsive table-bordered">
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-responsive table-bordered">
+                <tr>
+                    <th>Title</th>
+                    <th>DateReleased</th>
+                    <th>Cast</th>
+                    <th>Director</th>
+                    <th>Duration</th>
+                    <th>Desc</th>
+                </tr>
+                @foreach(var m in Model)
+                {
                     <tr>
-                        <th>Title</th>
-                        <th>DateReleased</th>
-                        <th>Cast</th>
-                        <th>Director</th>
-                        <th>Duration</th>
-                        <th>Desc</th>
+                        <td>@m.Title</td>
+                        <td>@m.DateReleased</td>
+                        <td>@m.Cast</td>
+                        <td>@m.Director</td>
+                        <td>@m.Duration</td>
+                        <td>@m.Desc</td>
+                        <td><input type="button" value="Add to Cart" class="btn-primary" /></td>
                     </tr>
-                    @foreach(var m in Model)
-                    {
-                        <tr>
-                            <td>@m.Title</td>
-                            <td>@m.DateReleased</td>
-                            <td>@m.Cast</td>
-                            <td>@m.Director</td>
-                            <td>@m.Duration</td>
-                            <td>@m.Desc</td>
-                            <td><input type="button" value="Add to Cart" class="btn-primary" /></td>
-                        </tr>
-                    }
-                </table>
-            </div>
+                }
+            </table>
         </div>
-    </form>
+    </div>
 </div>

@@ -3,24 +3,33 @@
 
 <div class="container">
     <div class="row">
+        <div class="col-xs-6" style="text-align:center;">
+            <h1>Payment</h1>
+        </div>
         <div class="col-xs-12">
-            <form action="/Cart/CreatePayment" method="post">
-                @ViewBag.Message
-                <table class="table-responsive table table-striped">
+            <form asp-action="CreatePayment" method="post">
+                <b style="font-size: 15px">Total amount required to be paid : $@Model.AmountPaid</b>
+                <table class="table table-bordered table-responsive">
                     <tr>
-                        <td colspan="2">The total cost is @ViewBag.TotalCost.</td>
-                        <td><input type="submit" value="Purchase" /></td>
+                        <th>Title</th>
+                        <th>Cost per day</th>
                     </tr>
-                    @for(int i = 0; i < Model.Rentals.Count; i++)
+                    @for (int i = 0; i < Model.Rentals.Count; i++)
                     {
                         <tr>
-                            <td>@Model.Rentals[i].MovieTitle</td>
-                            <td>@(Model.Rentals[i].Cost/7) per day, over a period of 7 days.</td>
-                            <td></td>
+                            <td>@Model.Rentals[i].MovieTitle</td>z
+                            <td>$@(Model.Rentals[i].Cost / 7)</td>
                         </tr>
+                        @Html.HiddenFor(m => m.Rentals[i].MovieID)
+                        @Html.HiddenFor(m => m.Rentals[i].RentalID)
+                        @Html.HiddenFor(m => m.Rentals[i].EndRentalDate)
+                        @Html.HiddenFor(m => m.Rentals[i].StartRentalDate)
+                        @Html.HiddenFor(m => m.Rentals[i].Cost)
+                        @Html.HiddenFor(m => m.Rentals[i].MovieTitle)
                     }
+                    @Html.HiddenFor(m => m.AmountPaid)
                 </table>
-                <div class="text-danger" asp-validation-summary="All"></div>
+                <input type="submit" value="Rent" />
             </form>
         </div>
     </div>

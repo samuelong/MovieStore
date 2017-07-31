@@ -190,7 +190,7 @@ namespace MovieStore.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -211,7 +211,7 @@ namespace MovieStore.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -222,7 +222,7 @@ namespace MovieStore.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Cost = table.Column<decimal>(nullable: false),
                     EndRentalDate = table.Column<DateTime>(nullable: false),
-                    MovieID = table.Column<int>(nullable: false),
+                    MovieId = table.Column<int>(nullable: false),
                     PaymentId = table.Column<int>(nullable: false),
                     StartRentalDate = table.Column<DateTime>(nullable: false)
                 },
@@ -230,17 +230,17 @@ namespace MovieStore.Migrations
                 {
                     table.PrimaryKey("PK_Rentals", x => x.RentalID);
                     table.ForeignKey(
-                        name: "FK_Rentals_Movies_MovieID",
-                        column: x => x.MovieID,
+                        name: "FK_Rentals_Movies_MovieId",
+                        column: x => x.MovieId,
                         principalTable: "Movies",
                         principalColumn: "MovieID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Rentals_Payments_RentalID",
-                        column: x => x.RentalID,
+                        name: "FK_Rentals_Payments_PaymentId",
+                        column: x => x.PaymentId,
                         principalTable: "Payments",
                         principalColumn: "PaymentID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -300,14 +300,14 @@ namespace MovieStore.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rentals_MovieID",
+                name: "IX_Rentals_MovieId",
                 table: "Rentals",
-                column: "MovieID");
+                column: "MovieId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rentals_RentalID",
+                name: "IX_Rentals_PaymentId",
                 table: "Rentals",
-                column: "RentalID");
+                column: "PaymentId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
