@@ -84,7 +84,7 @@ namespace MovieStore.Models
                 .WithMany()
                 .IsRequired(true)
                 .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Restrict)
-                .HasForeignKey(r => r.Title);
+                .HasForeignKey(r => r.MovieId);
 
             // User to UserMovies - 1 to 1 Relation
             modelBuilder.Entity<AppUserMovies>()
