@@ -53,7 +53,7 @@ namespace MovieStore.Controllers
                 .FirstOrDefault(m => m.Title == title));
 
         [HttpPost]
-        public IActionResult Edit(MovieModel movie)
+        public IActionResult Edit(Movie movie)
         {
             // SET THE MOVIE USING THE MOVIEMODEL!
             if (ModelState.IsValid)
